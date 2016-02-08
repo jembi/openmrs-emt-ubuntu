@@ -1,0 +1,12 @@
+usr/local/bin/openmrs-emt /usr/local/bin/openmrs-emt
+usr/local/etc/EmrMonitoringTool/shell-backend/README.md /usr/local/etc/EmrMonitoringTool/README.md
+usr/local/etc/EmrMonitoringTool/shell-backend/heartbeat.sh /usr/local/etc/EmrMonitoringTool/shell-backend/heartbeat.sh
+usr/local/etc/EmrMonitoringTool/shell-backend/startup-hook.sh /usr/local/etc/EmrMonitoringTool/shell-backend/startup-hook.sh
+usr/local/etc/EmrMonitoringTool/shell-backend/generate-report.sh /usr/local/etc/EmrMonitoringTool/shell-backend/generate-report.sh
+usr/local/etc/EmrMonitoringTool/shell-backend/openmrs-heartbeat.sh /usr/local/etc/EmrMonitoringTool/shell-backend/openmrs-heartbeat.sh
+usr/local/etc/EmrMonitoringTool/shell-backend/README.md /usr/local/etc/EmrMonitoringTool/shell-backend/README.md
+usr/local/etc/EmrMonitoringTool/shell-backend/lib/commons-logging-1.1.3.jar /usr/local/etc/EmrMonitoringTool/shell-backend/lib/commons-logging-1.1.3.jar
+usr/local/etc/EmrMonitoringTool/shell-backend/lib/fontbox-1.8.5.jar /usr/local/etc/EmrMonitoringTool/shell-backend/lib/fontbox-1.8.5.jar
+usr/local/etc/EmrMonitoringTool/shell-backend/lib/pdfbox-1.8.5.jar /usr/local/etc/EmrMonitoringTool/shell-backend/lib/pdfbox-1.8.5.jar
+usr/local/etc/EmrMonitoringTool/shell-backend/lib/jempbox-1.8.5.jar /usr/local/etc/EmrMonitoringTool/shell-backend/lib/jempbox-1.8.5.jar
+usr/local/etc/EmrMonitoringTool/shell-backend/lib/emtfrontend-0.6-SNAPSHOT.jar /usr/local/etc/EmrMonitoringTool/shell-backend/lib/emtfrontend-0.6-SNAPSHOT.jar

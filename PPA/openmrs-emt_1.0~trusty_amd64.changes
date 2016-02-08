@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Mon, 08 Feb 2016 16:41:17 +0300
+Source: openmrs-emt
+Binary: openmrs-emt
+Architecture: source all
+Version: 1.0~trusty
+Distribution: trusty
+Urgency: medium
+Maintainer: Kaweesi Joseph <k.joseph@openmrs.org>
+Changed-By: Kaweesi Joseph <k.joseph@openmrs.org>
+Description: 
+ openmrs-emt - OpenMRS monitoring tool for MoH Rwanda
+Changes: 
+ openmrs-emt (1.0~trusty) trusty; urgency=medium
+ .
+   * Release Debian Build 1.0
+Checksums-Sha1: 
+ dc90f17ef22318f370ed49f2898d7c967e3e9e88 486 openmrs-emt_1.0~trusty.dsc
+ 90accf7a7fe8730682e468b538398a4d6c843768 4203415 openmrs-emt_1.0~trusty.tar.gz
+ 21ed4773fa722800c385fc4fd95e7a23c95b7d0b 4130966 openmrs-emt_1.0~trusty_all.deb
+Checksums-Sha256: 
+ 42d46ecd80b401b7a24544f865c90a67948ba29c7e606b63523201fa48253699 486 openmrs-emt_1.0~trusty.dsc
+ e888deb472f47bfe490ca2c8022ac04e1c49cb1d42e6c44ae6de29c7e042efc8 4203415 openmrs-emt_1.0~trusty.tar.gz
+ e9c8ee0b4ae236c30e4e356b553d794e126ccd3fb84f08132e1eb710427b210f 4130966 openmrs-emt_1.0~trusty_all.deb
+Files: 
+ 7e14b92d852e17616b303240688ac24a 486 base optional openmrs-emt_1.0~trusty.dsc
+ 1e3bac12d093e8bf69e1b1aa13fa536b 4203415 base optional openmrs-emt_1.0~trusty.tar.gz
+ e385cef69fbc41d461cd79fbbc347aca 4130966 base optional openmrs-emt_1.0~trusty_all.deb

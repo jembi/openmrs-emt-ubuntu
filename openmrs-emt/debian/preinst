@@ -1,0 +1,5 @@
+#!/bin/bash
+mkdir /usr/local/etc
+mkdir /usr/local/etc/EmrMonitoringTool
+mkdir /usr/local/etc/EmrMonitoringTool/shell-backend
+mkdir /usr/local/etc/EmrMonitoringTool/shell-backend/lib
