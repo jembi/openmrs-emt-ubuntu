@@ -19,4 +19,4 @@ sudo apt-get install packaging-dev
 cd openmrs-emt;
 debuild
 ```
-May require installation ofo packaging tools
+May require installation of packaging tools
