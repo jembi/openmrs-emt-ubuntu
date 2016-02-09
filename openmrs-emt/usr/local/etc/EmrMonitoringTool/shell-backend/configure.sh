@@ -15,9 +15,9 @@ SYSTEM_ID=`hostname`-`ifconfig eth0 | grep HWaddr | awk '{ print $NF}' | sed 's/
 NOW=`date +%Y%m%d-%H%M%S`
 
 # remove old cronjobs
-crontab -l | grep -v heartbeat.sh | crontab -
-crontab -l | grep -v openmrs-heartbeat.sh | crontab -
-crontab -l | grep -v startup-hook.sh | crontab -
+crontab -l | grep -v '$INSTALL_DIR/heartbeat.sh' | crontab -
+crontab -l | grep -v '$INSTALL_DIR/openmrs-heartbeat.sh' | crontab -
+crontab -l | grep -v '$INSTALL_DIR/startup-hook.sh' | crontab -
 
 (crontab -l ; echo "1,16,31,46 * * * * $INSTALL_DIR/heartbeat.sh") | crontab -
 (crontab -l ; echo "2,17,32,47 * * * * $INSTALL_DIR/openmrs-heartbeat.sh") | crontab -
