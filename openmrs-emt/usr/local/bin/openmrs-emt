@@ -37,14 +37,14 @@ OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name' | tail 
 OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
 OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory' | tail -n 1 | cut -d "=" -f2-`
 OMRS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_url' | tail -n 1 | cut -d "=" -f2-`
+
+cp -r shell-backend $EMT_DIR
 if [ -f pom.xml ]; then
 	EMR_MODULE_ID=`grep -m 1 '<artifactId>' pom.xml | cut -f2 -d">"|cut -f1 -d"<"`
 	EMR_MODULE_VERSION=`grep -m 1 '<version>' pom.xml | cut -f2 -d">"|cut -f1 -d"<"`
 	EMR_JAR=omod/target/$EMR_MODULE_ID-$EMR_MODULE_VERSION.jar
-	cp $EMR_JAR $EMT_DIR/lib
+	cp $EMR_JAR $EMT_DIR/shell-backend/lib
 fi
-cp -r shell-backend/lib $EMT_DIR
-cp shell-backend/*.sh $EMT_DIR
 if [ ! -d $OMRS_DATA_DIR ]; then
 	echo "ERROR: $OMRS_DATA_DIR must exist to proceed, confirm that it is the right OpenMRS Data Directory/folder"
 	exit 1
@@ -52,10 +52,6 @@ fi
 if [ ! -d $OMRS_DATA_DIR/EmrMonitoringTool ]; then
 	mkdir $OMRS_DATA_DIR/EmrMonitoringTool
 fi
-bash $EMT_DIR/configure.sh $EMT_DIR $OMRS_DATA_DIR
-bash $EMT_DIR/startup-hook.sh
-bash $EMT_DIR/heartbeat.sh
-bash $EMT_DIR/openmrs-heartbeat.sh
-bash $EMT_DIR/generate-example-report.sh
+bash $EMT_DIR/shell-backend/configure.sh $EMT_DIR $OMRS_DATA_DIR
 echo "You have successfully installed EMT"
 

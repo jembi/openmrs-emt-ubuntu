@@ -8,9 +8,10 @@ exit 1
 fi
 
 #$1 contains emt backend directory and $2 openmrs data directory
-INSTALL_DIR=$1
-LOG=$2/EmrMonitoringTool/emt.log
-CONFIG=$2/EmrMonitoringTool/emt.properties
+EMT_INSTALL_DIR=$1
+OPENMRS_INSTALL_DIR=$2
+LOG=$OPENMRS_INSTALL_DIR/EmrMonitoringTool/emt.log
+CONFIG=$OPENMRS_INSTALL_DIR/EmrMonitoringTool/emt.properties
 SYSTEM_ID=`hostname`-`ifconfig eth0 | grep HWaddr | awk '{ print $NF}' | sed 's/://g'`
 NOW=`date +%Y%m%d-%H%M%S`
 
@@ -18,10 +19,22 @@ NOW=`date +%Y%m%d-%H%M%S`
 crontab -l | grep -v heartbeat.sh | crontab -
 crontab -l | grep -v openmrs-heartbeat.sh | crontab -
 crontab -l | grep -v startup-hook.sh | crontab -
+crontab -l | grep -v push-data-to-dhis.sh | crontab -
 
-(crontab -l ; echo "1,16,31,46 * * * * $INSTALL_DIR/heartbeat.sh") | crontab -
-(crontab -l ; echo "2,17,32,47 * * * * $INSTALL_DIR/openmrs-heartbeat.sh") | crontab -
-(crontab -l ; echo "@reboot $INSTALL_DIR/startup-hook.sh") | crontab -
+#add execute rights
+chmod +x $EMT_INSTALL_DIR/heartbeat.sh
+chmod +x $EMT_INSTALL_DIR/openmrs-heartbeat.sh
+chmod +x $EMT_INSTALL_DIR/startup-hook.sh
+chmod +x $EMT_INSTALL_DIR/push-data-to-dhis.sh
+
+## adding new fresh clone jobs
+# runs every hour at h+1 h+16, h+31 and h+46 minutes
+(crontab -l ; echo "1,16,31,46 * * * * $EMT_INSTALL_DIR/heartbeat.sh") | crontab -
+# runs every hour at h+2 h+17, h+32 and h+47 minutes
+(crontab -l ; echo "2,17,32,47 * * * * $EMT_INSTALL_DIR/openmrs-heartbeat.sh") | crontab -
+# runs on every reboot
+(crontab -l ; echo "@reboot $EMT_INSTALL_DIR/startup-hook.sh") | crontab -
+(crontab -l ; echo "3,19,33,49 * * * * $EMT_INSTALL_DIR/push-data-to-dhis.sh") | crontab -
 
 echo "$NOW;$SYSTEM_ID;EMT-INSTALL;0.5" >> $LOG
 
@@ -45,7 +58,7 @@ echo "           (Any difference of more than 5 minutes)"
 
 # Check write permission for tomcat6 in modules directory
 # TODO remove this check if proved un-necessary
-MODULES_OWNER=`stat -c '%U' $2/modules | tail`
+MODULES_OWNER=`stat -c '%U' $OPENMRS_INSTALL_DIR/modules | tail`
 if [ "$MODULES_OWNER" != "tomcat6" ]; then
   echo ""
   echo "WARNING: OpenMRS modules most likely can NOT be uploaded with OpenMRS!" 

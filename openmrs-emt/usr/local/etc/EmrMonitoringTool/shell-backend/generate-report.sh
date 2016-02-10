@@ -19,13 +19,14 @@ generateReportForConfig() {
 
 	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
 	LOGFILE=$OMRS_DATA_DIR/EmrMonitoringTool/emt.log
+	DHISDATAVALUESETS=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	STARTDATE=$1
 	ENDDATE=$2
 	OUTPUTPDF=$3
 
 	BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-	java -cp "$BASEDIR/lib/*" org.openmrs.module.emtfrontend.Emt $1 $2 $LOGFILE $OUTPUTPDF
+	java -cp "$BASEDIR/lib/*" org.openmrs.module.emtfrontend.Emt $STARTDATE $ENDDATE $LOGFILE $OUTPUTPDF $DHISDATAVALUESETS
 }
 
 
