@@ -18,26 +18,26 @@ Changes:
  .
    * Release Debian Build 1.0
 Checksums-Sha1: 
- 60fd5d09a76645327532209884d722d474d6e9aa 1002 openmrs-emt_1.0.dsc
- 921e50218d6be960a3f32cf57447a1078f006c29 4206194 openmrs-emt_1.0.tar.gz
- 0e06c462cc1e6fac607f18cb3dbfcfe5a999cb56 4134664 openmrs-emt_1.0_all.deb
+ 497fceb400a9e3385194ecf502976b84ebf57fdd 1002 openmrs-emt_1.0.dsc
+ d0f6b5468d3850bb8ec3d7ebd775276dc8638109 4206296 openmrs-emt_1.0.tar.gz
+ bde4d5ea7127a40e0b0ab4f021c8ea4c40111491 4134748 openmrs-emt_1.0_all.deb
 Checksums-Sha256: 
- 1f787871c6632dff2ff35076916a3c401944f13f6498686425d3d1d920fbb827 1002 openmrs-emt_1.0.dsc
- 864d56d81eb1501c2710880c516322504617d11e7891982e889c6541331a4bdb 4206194 openmrs-emt_1.0.tar.gz
- 384f569e9fe40b212ab324b2fbeebae87a1363b1d9b94c77c9de1e9937d94b73 4134664 openmrs-emt_1.0_all.deb
+ 29478ed1b0c4f16effceb859c2eb58105176374caa4e2f2ec561f41ebbae4fa8 1002 openmrs-emt_1.0.dsc
+ 2733d053cd9a7de0d906a2d1b285a08d17b439f732adabdc23d8ee378e176956 4206296 openmrs-emt_1.0.tar.gz
+ 9faff3951ec847ead4aac919747ec2f90016c5e4e028240539d7a00e05387e74 4134748 openmrs-emt_1.0_all.deb
 Files: 
- b5656b80467f76654c825394e664aa5d 1002 base optional openmrs-emt_1.0.dsc
- 688a99ef3681c82230a461de8f132fe0 4206194 base optional openmrs-emt_1.0.tar.gz
- 21dbb0fdaecde8b982a9bb4043f00344 4134664 base optional openmrs-emt_1.0_all.deb
+ 3b77c56d20fc2052942d6cbf3d6a1fb4 1002 base optional openmrs-emt_1.0.dsc
+ f7b53a5cb68b5e891f66bce9c5e5ae2e 4206296 base optional openmrs-emt_1.0.tar.gz
+ 19b86133bc9e336d0c169c105006dd77 4134748 base optional openmrs-emt_1.0_all.deb
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJWvGWmAAoJENMx/FwlK+V2k6sH/ib0SZzRpXJV82D5v6y2Feiq
-UavOHgWPm4n8n+P3ix40GU5xaFwiqeokp7Xkmymj/HmteNRcZMaiHQdl+zxC+leN
-g1lH5S+efR/b/lu0MUojGZX6mvFb9GQjbkYYQ/ZAifxGluCrH4XsFPUCgPB60XXa
-ZRIbcDB5/UJ5O1zV8nzknRJIjT4/B6jdMNgOZJaKojHb7mW8TmdHMJfIfo5esE/T
-yGkl4SDcRY/TRbKBF6P66BMdVG1uTOdQy3JvPmOzNp0AI81dMq5L4UAaf67rAe+e
-KmflQd8gvElVB/MKfHKhFTFMWLIJ6zjl1+T+SSt9gMiG4T0yDwSwg64Sr2nXMCA=
-=0cRQ
+iQEcBAEBAgAGBQJWvHXSAAoJENMx/FwlK+V2fmgIAMLMiSQlV1c/YX4Ioh1IcTFp
+mWiKF/xpmsM2kWP6wZXNZWEyTGyYof4+PPfKjavUfbG3PfD4+/VPeCaiR15Ffyl2
+NgS86cUW4vDrIHTQktwtZUT9pz+nsg2H7MrYOfwVXZ0Z0uAqoEIfDRvY0mIXhpTY
+ceXk0syEBLZo/9eL6aAxAJwYl1ypqI3bd9HkIpK69yhcLekQl3JiQh6JhZVuAiok
+UToVSutc5/yHmpao9q0dCQR0NXjB173Ro2BBrOMIEooP6FsU5Elu7O60chE7vjTR
+61NcQHwbtrJk1LOY8rMAhNwFwI2ZTv5HmlLrCFZtITtvGW45YRlraCfuKVFO8Wk=
+=EQcU
 -----END PGP SIGNATURE-----
