@@ -3,7 +3,7 @@
 # Pushes the previously stored datasetvalues on the file system to a live dhis instance
 
 pushDataToDHIS() {
-	EMT_MAIN_CONFIG= $1
+	EMT_MAIN_CONFIG=$1
    
 	if [ ! -f $EMT_MAIN_CONFIG ]; then
 		echo "ERROR: $EMT_MAIN_CONFIG must exist to proceed, make sure you successfully run improved-installation.sh first"
@@ -19,9 +19,9 @@ pushDataToDHIS() {
 
 
 EMT_DIR=/usr/local/etc/EmrMonitoringTool
-EMT_CONFIG_FILES=($(ls -a $EMT_DIR | egrep '^\..*-emt-config.properties$'))
+EMT_CONFIG_FILES=($(ls -a $EMT_DIR/.*-emt-config.properties))
 
 for i in "${EMT_CONFIG_FILES[@]}"
 do
-	pushDataToDHIS "$EMT_DIR/$i"
+	pushDataToDHIS "$i"
 done

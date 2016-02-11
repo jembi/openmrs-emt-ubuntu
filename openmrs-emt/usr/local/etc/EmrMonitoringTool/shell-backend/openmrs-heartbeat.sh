@@ -1,10 +1,8 @@
 #!/bin/bash
 
-EMT_DIR=/usr/local/etc/EmrMonitoringTool
-EMT_CONFIG_FILES=($(ls -a $EMT_DIR | egrep '^\..*-emt-config.properties$'))
-
 openmrsHeartbeat() {
 	EMT_MAIN_CONFIG=$1
+	
 	if [ ! -f $EMT_MAIN_CONFIG ]; then
 		echo "ERROR: $EMT_MAIN_CONFIG must exist to proceed, make sure you successfully run improved-installation.sh first"
 		exit 1
@@ -91,7 +89,10 @@ openmrsHeartbeat() {
 	echo "$NOW;$SYSTEM_ID;OPENMRS-HEARTBEAT;$OPENMRS_STATUS;$MYSQL_STATUS;$BACKUP_STATUS;$MOH_STATUS">> $LOG
 }
 
+EMT_DIR=/usr/local/etc/EmrMonitoringTool
+EMT_CONFIG_FILES=($(ls -a $EMT_DIR/.*-emt-config.properties))
+
 for i in "${EMT_CONFIG_FILES[@]}"
 do
-	openmrsHeartbeat "$EMT_DIR/$i"
+	openmrsHeartbeat "$i"
 done

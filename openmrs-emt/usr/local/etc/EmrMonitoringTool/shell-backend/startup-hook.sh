@@ -1,8 +1,5 @@
 #!/bin/bash
 
-EMT_DIR=/usr/local/etc/EmrMonitoringTool
-EMT_CONFIG_FILES=($(ls -a $EMT_DIR | egrep '^\..*-emt-config.properties$'))
-
 startupHook() {
 	EMT_MAIN_CONFIG=$1
 	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
@@ -42,7 +39,10 @@ startupHook() {
 	fi
 }
 
+EMT_DIR=/usr/local/etc/EmrMonitoringTool
+EMT_CONFIG_FILES=($(ls -a $EMT_DIR/.*-emt-config.properties))
+
 for i in "${EMT_CONFIG_FILES[@]}"
 do
-	startupHook "$EMT_DIR/$i"
+	startupHook "$i"
 done
