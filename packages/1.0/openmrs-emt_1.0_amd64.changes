@@ -1,0 +1,43 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Mon, 11 Feb 2016 11:41:17 +0300
+Source: openmrs-emt
+Binary: openmrs-emt
+Architecture: source all
+Version: 1.0
+Distribution: trusty
+Urgency: medium
+Maintainer: Kaweesi Joseph <k.joseph@openmrs.org>
+Changed-By: Kaweesi Joseph <k.joseph@openmrs.org>
+Description: 
+ openmrs-emt - OpenMRS monitoring tool for MoH Rwanda
+Changes: 
+ openmrs-emt (1.0) trusty; urgency=medium
+ .
+   * Release Debian Build 1.0
+Checksums-Sha1: 
+ 60fd5d09a76645327532209884d722d474d6e9aa 1002 openmrs-emt_1.0.dsc
+ 921e50218d6be960a3f32cf57447a1078f006c29 4206194 openmrs-emt_1.0.tar.gz
+ 0e06c462cc1e6fac607f18cb3dbfcfe5a999cb56 4134664 openmrs-emt_1.0_all.deb
+Checksums-Sha256: 
+ 1f787871c6632dff2ff35076916a3c401944f13f6498686425d3d1d920fbb827 1002 openmrs-emt_1.0.dsc
+ 864d56d81eb1501c2710880c516322504617d11e7891982e889c6541331a4bdb 4206194 openmrs-emt_1.0.tar.gz
+ 384f569e9fe40b212ab324b2fbeebae87a1363b1d9b94c77c9de1e9937d94b73 4134664 openmrs-emt_1.0_all.deb
+Files: 
+ b5656b80467f76654c825394e664aa5d 1002 base optional openmrs-emt_1.0.dsc
+ 688a99ef3681c82230a461de8f132fe0 4206194 base optional openmrs-emt_1.0.tar.gz
+ 21dbb0fdaecde8b982a9bb4043f00344 4134664 base optional openmrs-emt_1.0_all.deb
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJWvGWmAAoJENMx/FwlK+V2k6sH/ib0SZzRpXJV82D5v6y2Feiq
+UavOHgWPm4n8n+P3ix40GU5xaFwiqeokp7Xkmymj/HmteNRcZMaiHQdl+zxC+leN
+g1lH5S+efR/b/lu0MUojGZX6mvFb9GQjbkYYQ/ZAifxGluCrH4XsFPUCgPB60XXa
+ZRIbcDB5/UJ5O1zV8nzknRJIjT4/B6jdMNgOZJaKojHb7mW8TmdHMJfIfo5esE/T
+yGkl4SDcRY/TRbKBF6P66BMdVG1uTOdQy3JvPmOzNp0AI81dMq5L4UAaf67rAe+e
+KmflQd8gvElVB/MKfHKhFTFMWLIJ6zjl1+T+SSt9gMiG4T0yDwSwg64Sr2nXMCA=
+=0cRQ
+-----END PGP SIGNATURE-----

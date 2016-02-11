@@ -1,14 +1,5 @@
 #!/bin/bash
 
-if [ "$#" -ne 3 ]; then
-	echo "Illegal number of parameters"
-	echo "Usage:  improved-installation.sh <OpenMRS APPName> <OpenMRS Data Directory> <Tomcat Root URL>"
-	echo ""
-	echo "Usage example: improved-installation.sh openmrs167 ~/.OpenMRS http://localhost:8080"
-	echo ""
-	exit 1
-fi
-
 # Important variables
 EMT_DIR=/usr/local/etc/EmrMonitoringTool
 OPENMRS_APP_NAME=$1
@@ -16,6 +7,18 @@ OPENMRS_DATA_DIR=$2
 TOMCAT_ROOT_URL=$3
 OPENMRS_URL=$TOMCAT_ROOT_URL/$OPENMRS_APP_NAME
 EMT_MAIN_CONFIG=$EMT_DIR/.$OPENMRS_APP_NAME-emt-config.properties
+
+if [ $1 -eq "-pushToDHIS" ]; then
+	bash $EMT_DIR/shell-backend/push-data-to-dhis.sh
+fi
+elif [ "$#" -ne 3 ]; then
+	echo "Illegal number of parameters"
+	echo "Usage:  openmrs-emt <OpenMRS APPName> <OpenMRS Data Directory> <Tomcat Root URL>"
+	echo ""
+	echo "Usage example: openmrs-emt openmrs167 ~/.OpenMRS http://localhost:8080"
+	echo ""
+	exit 1
+fi
 
 if [ ! -d $EMT_DIR ]; then
 	mkdir $EMT_DIR

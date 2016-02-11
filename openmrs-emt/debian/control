@@ -1,5 +1,5 @@
 Source: openmrs-emt
-Version: 1.0
+Standards-Version: 1.0
 Section: base
 Priority: optional
 Maintainer: Kaweesi Joseph <k.joseph@openmrs.org>
