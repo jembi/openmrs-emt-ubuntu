@@ -1,22 +1,13 @@
-OpenMRS MoH EMR Rwanda packaging
+OpenMRS MoH EMR Rwanda back-end packaging
 ========================
+This projects contains the backend support for the MoH OpenMRS Rwanda EMR server monitoring tool, see also https://github.com/jembi/openmrs-module-emtfrontend 
 
-Ubuntu packaging scripts. Currently supports:
-* 14.04 Trusty
+Installation
+==============
+* Download .deb from; packages/1.0
+* Change to downloads directory
+* Run
+```
+sudo dpkg -i openmrs-emt_1.0_all.deb
+```
 
-Packaging Process
-=================
-Building a .deb file 
-```
-dpkg -b openmrs-emt/ openmrs-emt.deb
-```
-This works when openmrs-emt/debain is renamed to DEBIAN and requires no extra packages
-
-Building source files/PPA
-=================
-```
-sudo apt-get install packaging-dev
-cd openmrs-emt;
-debuild
-```
-May require installation of packaging tools
