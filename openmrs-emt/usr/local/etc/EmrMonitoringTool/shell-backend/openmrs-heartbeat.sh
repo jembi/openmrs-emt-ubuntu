@@ -73,7 +73,7 @@ openmrsHeartbeat() {
 	NUMBER_OBS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "select count(*) from obs where voided=0"`
 	NUMBER_USERS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "select count(*) from users where retired=0"`
 	MYSQL_STATUS="$NUMBER_ENCOUNTERS;$NUMBER_OBS;$NUMBER_USERS"
-
+	
 	# backup status
 	OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory' | tail -n 1 | cut -d "=" -f2-`
 	if [ ! -d $OMRS_BACKUP_DIR ]; then

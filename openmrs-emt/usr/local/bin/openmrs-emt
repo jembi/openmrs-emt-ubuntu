@@ -41,7 +41,7 @@ elif [ "$1" == "-copyLocalReportsTo" ]; then
 		exit 1
 	fi
 	
-	EMT_REPORTS=($(ls -a $EMT_DIR/shell-backend/.pdf))
+	EMT_REPORTS=($(ls -a $EMT_DIR/shell-backend/*.pdf))
 	
 	for REPORT in "${EMT_REPORTS[@]}"
 	do
