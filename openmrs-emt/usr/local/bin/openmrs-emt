@@ -18,6 +18,38 @@ if [ "$1" == "-pushToDHIS" ]; then
 	
 	bash $EMT_DIR/shell-backend/push-data-to-dhis.sh
 	exit 1
+elif [ "$1" == "-status" ]; then
+	if [ "$#" -ne 1 ]; then
+		echo "Illegal number of parameters"
+		echo "Usage: openmrs-emt -status"
+		echo ""
+		exit 1
+	fi
+	
+	EMT_CONFIG_FILES=($(ls -a $EMT_DIR/.*-emt-config.properties))
+	FINAL_STATUS_MESSAGE=""
+	
+	for i in "${EMT_CONFIG_FILES[@]}"
+	do
+		if [ ! -f "$i" ]; then
+			echo "$i is missing!!!, this means the tool is installed but messed around with"
+			exit 1å
+		fi
+		if [ -f "$i" ]; then
+			#TODO increment each openmrs webapp app and complete message as configured, then read the file to get openmrs data directory to check if the .log, .properties and .json files exist and append relevant messages respectively
+			#FINAL_STATUS_MESSAGE += ""
+			OPENMRS_WEB_APP_NAME=`sed '/^\#/d' "$i" | grep 'openmrs_app_name' | tail -n 1 | cut -d "=" -f2-`
+			OPENMRS_DATA_FOLDER=`sed '/^\#/d' "$i" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
+			
+			echo "$OPENMRS_WEB_APP_NAME is installed"
+			
+			if [ ! -d "$OPENMRS_DATA_FOLDER/EmrMonitoringTool" ]; then
+				echo "$OPENMRS_DATA_FOLDER/EmrMonitoringTool doesn't currently exist, EMT is installed but not well configured"
+			fi
+			exit 1
+		fi
+	done
+	exit 1
 elif [ "$1" == "-generateLocalReport" ]; then
 	if [ "$#" -ne 4 ]; then
 		echo "Illegal number of parameters"
@@ -27,7 +59,7 @@ elif [ "$1" == "-generateLocalReport" ]; then
 	fi
 	
 	$EMT_DIR/shell-backend/generate-report.sh $2 $3 $4
-	exit 1
+	exit 1	
 elif [ "$1" == "-copyLocalReportsTo" ]; then
 	if [ "$#" -ne 2 ]; then
 		echo "Illegal number of parameters"
