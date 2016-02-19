@@ -1,3 +1,2 @@
 #!/bin/bash
 
-sudo chmod 666 /var/lib/OpenMRS/EmrMonitoringTool/dhis-emt-datasetValueSets.json

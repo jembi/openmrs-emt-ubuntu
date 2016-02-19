@@ -10,7 +10,7 @@ Installation
 export MYSQL_BIN=/Applications/XAMPP/bin
 export PATH=$PATH:$MYSQL_BIN
 ```
-* Download .deb from; packages/1.0
+* Download .deb from; https://github.com/jembi/openmrs-emt-ubuntu/releases
 * Change to downloads directory
 * Run
 ```
@@ -19,10 +19,12 @@ export PATH=$PATH:$MYSQL_BIN
 3. sudo openmrs-emt -pushToDHIS
 4. sudo openmrs-emt -generateLocalReport 20140501 20160131 emt.pdf
 5. sudo openmrs-emt -copyLocalReportsTo <path/to/directory/to/copy/to>
+6. sudo openmrs-emt -status
 ```
 * To install a new instance to monitor, run 2. replacing openmrs with OpenMRS appname or war file name, /var/lib/OpenMRS (Full Path Name) with OpenMRS data directory and http://localhost:8080 with the URL to tomcat's Root
 * To push data to a remote dhisinstance run 3. will be lateron updated not to be hardcoded
 * To generate a local PDF reports, run command 4 replacing with start, end dates and name of exported pdf file
 * To Backup the previously exported emt reports run command 5
+* To get a simple dislay of the EMT tool status, run command 6
 
 NOTE: to run these commands for anon sudoer user exlude sudo from commands 2 to 5 after making both /usr/local/bin and /usr/local/share/etc readable and writable by your current logged in user
