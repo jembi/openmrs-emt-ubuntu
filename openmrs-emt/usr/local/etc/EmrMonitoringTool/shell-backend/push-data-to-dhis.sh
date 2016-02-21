@@ -4,16 +4,24 @@
 
 pushDataToDHIS() {
 	EMT_MAIN_CONFIG=$1
-   
+
 	if [ ! -f $EMT_MAIN_CONFIG ]; then
 		echo "ERROR: $EMT_MAIN_CONFIG must exist to proceed, make sure you successfully run improved-installation.sh first"
 		exit 1
 	fi
 
 	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
+	DHIS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_url' | tail -n 1 | cut -d "=" -f2-`
+	DHIS_USERNAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_user' | tail -n 1 | cut -d "=" -f2-`
+	DHIS_PASS=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_pass' | tail -n 1 | cut -d "=" -f2-`
 	DHISDATAVALUES=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	
-	curl -d @$DHISDATAVALUES "http://82.196.9.250:8080/api/dataValueSets" -H "Content-Type:application/json" -u admin:district
+	if [ $DHIS_URL != "" ] && [ $DHIS_USERNAME != "" ] && [ $DHIS_PASS != "" ]
+		then
+			curl -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+		else
+			echo "DHIS Server must first be configured correctly to use this functionality; Login details as well as URL must not be empty"
+	fi
 }
 
 

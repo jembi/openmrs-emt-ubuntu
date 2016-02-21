@@ -2,10 +2,6 @@
 
 # Generates a report
 
-STARTDATE=$1
-ENDDATE=$2
-OUTPUTPDF=$3
-
 if [ "$#" -ne 3 ]; then
     echo "Illegal number of parameters"
     echo "Usage example: generate-report.sh 20140501 20140531 emt.pdf"
@@ -14,8 +10,11 @@ fi
 
 
 generateReportForConfig() {
-	EMT_MAIN_CONFIG= $1
-   
+	EMT_MAIN_CONFIG=$4 	
+	STARTDATE=$1
+	ENDDATE=$2
+	OUTPUTPDF=$3
+
 	if [ ! -f $EMT_MAIN_CONFIG ]; then
 		echo "ERROR: $EMT_MAIN_CONFIG must exist to proceed, make sure you successfully run openmrs-emt first"
 		exit 1
@@ -37,5 +36,5 @@ EMT_CONFIG_FILES=($(ls -a $EMT_DIR/.*-emt-config.properties))
 
 for i in "${EMT_CONFIG_FILES[@]}"
 do
-	generateReportForConfig "$i"
+	generateReportForConfig $STARTDATE $ENDDATE $OUTPUTPDF "$i"
 done

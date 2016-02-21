@@ -31,7 +31,7 @@ openmrsHeartbeat() {
 	DB_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password' | tail -n 1 | cut -d "=" -f2-`
 	DB_URL=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.url' | tail -n 1 | cut -d "=" -f2-`
 	OPENMRS_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.username' | tail -n 1 | cut -d "=" -f2-`
-	OPENMRS_PASS==`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.password' | tail -n 1 | cut -d "=" -f2-`
+	OPENMRS_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.password' | tail -n 1 | cut -d "=" -f2-`
 
 	# Check properties could be read
 	if [ -z $DB_USER ] || [ -z $DB_PASS ] || [ -z $DB_URL ] || [ -z OPENMRS_USER ] || [ -z OPENMRS_PASS ]; then
