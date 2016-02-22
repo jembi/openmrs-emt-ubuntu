@@ -29,42 +29,4 @@ export PATH=$PATH:$MYSQL_BIN
 * To get a simple dislay of the EMT tool status, run command 6
 * To re-configure or setup an already configured openmrs instance, run commmand 7 which technically removes the previous configuration and creates a new one using the details provided
 
-NOTE: to run these commands for anon sudoer user exlude sudo from commands 2 to 5 after making both /usr/local/bin and /usr/local/share/etc readable and writable by your current logged in user
-
-
-Project Structure
-====================
-openmrs-emt
-|-- debian
-|   |-- changelog
-|   |-- control
-|   |-- debhelper.log
-|   |-- files
-|   |-- install
-|   |-- postinst
-|   |-- preinst
-|   |-- rules
-|   `-- substvars
-|-- README.md
-`-- usr
-    `-- local
-        |-- bin
-        |   `-- openmrs-emt
-        `-- etc
-            `-- EmrMonitoringTool
-                `-- shell-backend
-                    |-- configure.sh
-                    |-- generate-example-report.sh
-                    |-- generate-report.sh
-                    |-- heartbeat.sh
-                    |-- lib
-                    |   |-- commons-logging-1.1.3.jar
-                    |   |-- emtfrontend-0.6-SNAPSHOT.jar
-                    |   |-- fontbox-1.8.5.jar
-                    |   |-- jempbox-1.8.5.jar
-                    |   `-- pdfbox-1.8.5.jar
-                    |-- openmrs-heartbeat.sh
-                    |-- push-data-to-dhis.sh
-                    `-- startup-hook.sh
-
-8 directories, 23 files
+NOTE: to run these commands for anon sudoer user exlude sudo from commands 2 to 5 after making both /usr/local/bin and /usr/local/share/etc readable and writable by your current logged in user 
