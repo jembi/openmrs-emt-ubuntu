@@ -20,7 +20,7 @@ elif [ "$1" == "-status" ]; then
 		exit 1
 	fi
 	
-	EMT_CONFIG_FILES=($(ls -a $EMT_DIR/.*-emt-config.properties))
+	EMT_CONFIG_FILES=($(find "$EMT_DIR" -name ".*-emt-config.properties"))
 	FINAL_STATUS_MESSAGE=""
 	
 	for i in "${EMT_CONFIG_FILES[@]}"
@@ -61,13 +61,13 @@ elif [ "$1" == "-copyLocalReportsTo" ]; then
 		echo ""
 		exit 1
 	fi
-	if [ ! -d $2 ]; then
+	if [ ! -d "$2" ]; then
 		echo "$2 is not a directory or doesn't exist"
 		echo ""
 		exit 1
 	fi
 	
-	EMT_REPORTS=($(ls -a $EMT_DIR/shell-backend/*.pdf))
+	EMT_REPORTS=($(find "$EMT_DIR"/shell-backend -name "*.pdf"))
 	
 	for REPORT in "${EMT_REPORTS[@]}"
 	do
@@ -106,22 +106,22 @@ fi
 OPENMRS_URL=$TOMCAT_ROOT_URL/$OPENMRS_APP_NAME
 EMT_MAIN_CONFIG=$EMT_DIR/."$OPENMRS_APP_NAME"-emt-config.properties
 
-if [ ! -d $EMT_DIR ]; then
+if [ ! -d "$EMT_DIR" ]; then
 	mkdir $EMT_DIR
 fi
 
-if [ ! -f $EMT_MAIN_CONFIG ]; then
+if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 echo "Do you want to configure DHIS server right now (Y/N): "
 read yesOrNo
 
-if [ "$yesOrNo" == "Y" ] || [ "$yesOrNo" == "Yes" ] || [ "$yesOrNo" == "YES" ] || [ "$yesOrNo" == "yes" ]
+if [ "$yesOrNo" == "y" ] || [ "$yesOrNo" == "Y" ] || [ "$yesOrNo" == "Yes" ] || [ "$yesOrNo" == "YES" ] || [ "$yesOrNo" == "yes" ]
 	then
 		echo ""
-		echo "Enter DHIS Server URL: "; read DHIS_URL
+		echo "Enter DHIS Server URL (eg. http://localhost:8080/dhis/api/dataValueSets): "; read DHIS_URL
 		echo "Enter DHIS Server Login UserName : "; read DHIS_USER
 		echo "Enter DHIS Server Login Password : "; stty -echo; read DHIS_PASS; stty echo;
 	
-		if [ $DHIS_URL == "" ] || [ $DHIS_USER == "" ] || [ $DHIS_PASS == "" ]; then
+		if [ "$DHIS_URL" == "" ] || [ "$DHIS_USER" == "" ] || [ "$DHIS_PASS" == "" ]; then
 			echo "DHIS URL, UserName and Password can't be empty and therefore DHIS Server configuration has been ignored"
 			DHIS_URL=""
 			DHIS_USER=""
@@ -154,20 +154,13 @@ OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' |
 OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory' | tail -n 1 | cut -d "=" -f2-`
 OMRS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_url' | tail -n 1 | cut -d "=" -f2-`
 
-cp -r shell-backend $EMT_DIR
-if [ -f pom.xml ]; then
-	EMR_MODULE_ID=`grep -m 1 '<artifactId>' pom.xml | cut -f2 -d">"|cut -f1 -d"<"`
-	EMR_MODULE_VERSION=`grep -m 1 '<version>' pom.xml | cut -f2 -d">"|cut -f1 -d"<"`
-	EMR_JAR=omod/target/$EMR_MODULE_ID-$EMR_MODULE_VERSION.jar
-	cp $EMR_JAR $EMT_DIR/shell-backend/lib
-fi
-if [ ! -d $OMRS_DATA_DIR ]; then
+if [ ! -d "$OMRS_DATA_DIR" ]; then
 	echo "ERROR: $OMRS_DATA_DIR must exist to proceed, confirm that it is the right OpenMRS Data Directory/folder"
 	exit 1
 fi
-if [ ! -d $OMRS_DATA_DIR/EmrMonitoringTool ]; then
+if [ ! -d "$OMRS_DATA_DIR/EmrMonitoringTool" ]; then
 	mkdir $OMRS_DATA_DIR/EmrMonitoringTool
 fi
-bash $EMT_DIR/shell-backend/configure.sh $EMT_DIR $OMRS_DATA_DIR
+$EMT_DIR/shell-backend/configure.sh $EMT_DIR $OMRS_DATA_DIR
 echo "You have successfully installed EMT"
 

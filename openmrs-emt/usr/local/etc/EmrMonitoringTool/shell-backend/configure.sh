@@ -23,13 +23,6 @@ crontab -l | grep -v startup-hook.sh | crontab -
 crontab -l | grep -v generate-example-report.sh | crontab -
 crontab -l | grep -v push-data-to-dhis.sh | crontab -
 
-#add execute rights
-chmod +x $EMT_INSTALL_DIR/shell-backend/heartbeat.sh
-chmod +x $EMT_INSTALL_DIR/shell-backend/openmrs-heartbeat.sh
-chmod +x $EMT_INSTALL_DIR/shell-backend/startup-hook.sh
-chmod +x $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh
-chmod +x $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh
-
 ## adding new fresh clone jobs
 # runs every hour at h+1 h+16, h+31 and h+46 minutes
 (crontab -l ; echo "1,16,31,46 * * * * $EMT_INSTALL_DIR/shell-backend/heartbeat.sh") | crontab -
@@ -43,20 +36,20 @@ chmod +x $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh
 (crontab -l ; echo "0 12 * * * $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh") | crontab -
 
 # create log file if necessary
-if [ ! -f $LOG ]; then
+if [ ! -f "$LOG" ]; then
 	touch $LOG
 	chmod 666 $LOG
 fi
 echo "$NOW;$SYSTEM_ID;EMT-INSTALL;0.5" >> $LOG
 
 #creating and setting read&write for $DHIS
-if [ ! -f $DHIS ]; then
+if [ ! -f "$DHIS" ]; then
 	touch $DHIS
 	chmod 666 $DHIS
 fi
 
 # create properties file if necessary
-if [ ! -f $CONFIG ]; then
+if [ ! -f "$CONFIG" ]; then
   echo ""
   echo "Creating default config file for clinic times"
   echo "clinicStart=800" >> $CONFIG

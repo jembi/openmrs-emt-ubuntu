@@ -3,7 +3,7 @@
 openmrsHeartbeat() {
 	EMT_MAIN_CONFIG=$1
 	
-	if [ ! -f $EMT_MAIN_CONFIG ]; then
+	if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 		echo "ERROR: $EMT_MAIN_CONFIG must exist to proceed, make sure you successfully run improved-installation.sh first"
 		exit 1
 	fi
@@ -14,14 +14,14 @@ openmrsHeartbeat() {
 	OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name' | tail -n 1 | cut -d "=" -f2-`
 	LOG=$OMRS_DATA_DIR/EmrMonitoringTool/emt.log
 
-	if [ ! -f $LOG ]; then
+	if [ ! -f "$LOG" ]; then
 		echo "ERROR: $LOG must exist to proceed, make sure you successfully run improved-installation.sh first"
 		exit 1
 	fi
 
 	OPENMRS_PROP_FILE=$OMRS_DATA_DIR/$OMRS_APP_NAME-runtime.properties
 	# Check runtime properties file exists
-	if [ ! -f $OPENMRS_PROP_FILE ]; then
+	if [ ! -f "$OPENMRS_PROP_FILE" ]; then
   		echo "Specified OpenMRS runtime properties file does not exist"
   		exit 1
 	fi
@@ -34,13 +34,13 @@ openmrsHeartbeat() {
 	OPENMRS_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.password' | tail -n 1 | cut -d "=" -f2-`
 
 	# Check properties could be read
-	if [ -z $DB_USER ] || [ -z $DB_PASS ] || [ -z $DB_URL ] || [ -z OPENMRS_USER ] || [ -z OPENMRS_PASS ]; then
+	if [ -z "$DB_USER" ] || [ -z "$DB_PASS" ] || [ -z "$DB_URL" ] || [ -z OPENMRS_USER ] || [ -z OPENMRS_PASS ]; then
   		echo "Unable to read OpenMRS runtime properties"
   		exit 1
 	fi
 
 	# Extract database name from connection URL
-	if [[ $DB_URL =~ /([a-zA-Z0-9_\-]+)\? ]]; then
+	if [[ "$DB_URL" =~ /([a-zA-Z0-9_\-]+)\? ]]; then
   		DB_NAME=${BASH_REMATCH[1]}
 	else
 	  DB_NAME="openmrs"
@@ -76,7 +76,7 @@ openmrsHeartbeat() {
 	
 	# backup status
 	OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory' | tail -n 1 | cut -d "=" -f2-`
-	if [ ! -d $OMRS_BACKUP_DIR ]; then
+	if [ ! -d "$OMRS_BACKUP_DIR" ]; then
 		mkdir $OMRS_BACKUP_DIR
 	fi
 	BACKUP_STATUS=`ls -tr1 $OMRS_BACKUP_DIR | tail -1`
@@ -90,7 +90,7 @@ openmrsHeartbeat() {
 }
 
 EMT_DIR=/usr/local/etc/EmrMonitoringTool
-EMT_CONFIG_FILES=($(ls -a $EMT_DIR/.*-emt-config.properties))
+EMT_CONFIG_FILES=($(find "$EMT_DIR" -name ".*-emt-config.properties"))
 
 for i in "${EMT_CONFIG_FILES[@]}"
 do

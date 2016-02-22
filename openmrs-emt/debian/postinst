@@ -1,2 +1,10 @@
 #!/bin/bash
 
+#add execute rights to cron job scripts
+EMT_INSTALL_DIR=/usr/local/etc/EmrMonitoringTool
+
+chmod +x $EMT_INSTALL_DIR/shell-backend/heartbeat.sh
+chmod +x $EMT_INSTALL_DIR/shell-backend/openmrs-heartbeat.sh
+chmod +x $EMT_INSTALL_DIR/shell-backend/startup-hook.sh
+chmod +x $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh
+chmod +x $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh
