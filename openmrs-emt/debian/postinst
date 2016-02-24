@@ -8,3 +8,5 @@ chmod +x $EMT_INSTALL_DIR/shell-backend/openmrs-heartbeat.sh
 chmod +x $EMT_INSTALL_DIR/shell-backend/startup-hook.sh
 chmod +x $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh
 chmod +x $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh
+chmod +x $EMT_INSTALL_DIR/shell-backend/clean-up-old-reports.sh
+chmod 666 $EMT_INSTALL_DIR/emt-to-dhis-mapping.txt

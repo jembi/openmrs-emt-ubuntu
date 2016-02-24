@@ -15,10 +15,33 @@ pushDataToDHIS() {
 	DHIS_USERNAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_user' | tail -n 1 | cut -d "=" -f2-`
 	DHIS_PASS=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_pass' | tail -n 1 | cut -d "=" -f2-`
 	DHISDATAVALUES=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
+	DHIS_NON_UPLOADED=$OMRS_DATA_DIR/EmrMonitoringTool/NotUploadedToDHIS
 	
 	if [ "$DHIS_URL" != "" ] && [ "$DHIS_USERNAME" != "" ] && [ "$DHIS_PASS" != "" ]
 		then
-			curl -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+			wget -q --tries=10 --timeout=20 --spider http://google.com
+			if [[ "$?" -eq 0 ]]
+				then
+        			curl -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+        			
+        			if [ -d "$DHIS_NON_UPLOADED" ]; then
+        				DHIS_NON_UPLOADED_FILES=($(find "$DHIS_NON_UPLOADED" -name "dhis-emt-datasetValueSets_*.json"))
+        				
+        				for DHIS_NON_UPLOADED_FILE in "${DHIS_NON_UPLOADED_FILES[@]}"
+						do
+							curl -d @$DHIS_NON_UPLOADED_FILE $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+						done
+						rmdir $DHIS_NON_UPLOADED
+        			fi
+				else
+        			if [ ! -d "$DHIS_NON_UPLOADED" ]; then
+        				mkdir $DHIS_NON_UPLOADED
+        			fi
+        			MISSED_DHIS="$DHIS_NON_UPLOADED/dhis-emt-datasetValueSets_$(date +'%Y%m%d-%s').json"
+        			
+        			cp $DHISDATAVALUES $DHIS_NON_UPLOADED
+        			mv $DHIS_NON_UPLOADED/dhis-emt-datasetValueSets.json $MISSED_DHIS
+			fi
 		else
 			echo "DHIS Server must first be configured correctly to use this functionality; Login details as well as URL must not be empty"
 	fi

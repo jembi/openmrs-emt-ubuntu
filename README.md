@@ -10,7 +10,7 @@ Installation & Usage
 export MYSQL_BIN=/Applications/XAMPP/bin
 export PATH=$PATH:$MYSQL_BIN
 ```
-* Download .deb from; https://github.com/jembi/openmrs-emt-ubuntu/releases
+* Download the latest .deb from; https://github.com/jembi/openmrs-emt-ubuntu/releases
 * Change Directory to downloads directory
 * Run
 ```

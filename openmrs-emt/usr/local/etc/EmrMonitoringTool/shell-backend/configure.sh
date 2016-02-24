@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if [ "$#" -ne 2 ]; then
 echo "Illegal number of parameters"
 echo ""
@@ -22,6 +23,7 @@ crontab -l | grep -v openmrs-heartbeat.sh | crontab -
 crontab -l | grep -v startup-hook.sh | crontab -
 crontab -l | grep -v generate-example-report.sh | crontab -
 crontab -l | grep -v push-data-to-dhis.sh | crontab -
+crontab -l | grep -v clean-up-old-reports.sh | crontab -
 
 ## adding new fresh clone jobs
 # runs every hour at h+1 h+16, h+31 and h+46 minutes
@@ -30,10 +32,19 @@ crontab -l | grep -v push-data-to-dhis.sh | crontab -
 (crontab -l ; echo "2,17,32,47 * * * * $EMT_INSTALL_DIR/shell-backend/openmrs-heartbeat.sh") | crontab -
 # runs on every reboot
 (crontab -l ; echo "@reboot $EMT_INSTALL_DIR/shell-backend/startup-hook.sh") | crontab -
-# run daily at 11:30
-(crontab -l ; echo "30 11 * * * $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh") | crontab -
-# runs daily at midday
-(crontab -l ; echo "0 12 * * * $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh") | crontab -
+# run daily at reboot, 11:15, 16:15, 23:15
+(crontab -l ; echo "@reboot $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh") | crontab -
+(crontab -l ; echo "15 11 * * * $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh") | crontab -
+(crontab -l ; echo "15 16 * * * $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh") | crontab -
+(crontab -l ; echo "15 23 * * * $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh") | crontab -
+# runs daily at 11:20, 14:20, 23:20 since DHIS will run uploaded data to show up at midnight
+(crontab -l ; echo "20 11 * * * $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh") | crontab -
+(crontab -l ; echo "20 14 * * * $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh") | crontab -
+(crontab -l ; echo "20 23 * * * $EMT_INSTALL_DIR/shell-backend/push-data-to-dhis.sh") | crontab -
+#runs on the first day of every month at 11:25, 16:25, 23:25
+(crontab -l ; echo "25 11 1 * * $EMT_INSTALL_DIR/shell-backend/clean-up-old-reports.sh") | crontab -
+(crontab -l ; echo "25 14 1 * * $EMT_INSTALL_DIR/shell-backend/clean-up-old-reports.sh") | crontab -
+(crontab -l ; echo "25 23 1 * * $EMT_INSTALL_DIR/shell-backend/clean-up-old-reports.sh") | crontab -
 
 # create log file if necessary
 if [ ! -f "$LOG" ]; then
