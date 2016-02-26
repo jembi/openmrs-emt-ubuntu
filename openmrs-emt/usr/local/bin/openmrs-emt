@@ -111,28 +111,36 @@ if [ ! -d "$EMT_DIR" ]; then
 fi
 
 if [ ! -f "$EMT_MAIN_CONFIG" ]; then
-echo "Please enter fosaid or DHIS Organization unit code or Uniquely assigned ID for this server!!!"; read DHIS_ORG_FOSID
-
-DHIS_ORG_UID=`sed '/^\#/d' "$EMT_DIR/emt-to-dhis-mapping.txt" | grep '$DHIS_ORG_FOSID' | tail -n 1 | cut -d "=" -f2-`
-
-if [ "$DHIS_ORG_FOSID" == "" ] || [ "$DHIS_ORG_UID" == "" ]
-	echo "fosid for this Server is Required to configure this tool (Ask from the tool providers if you are not sure what this is or add a new mapping at $EMT_DIR/emt-to-dhis-mapping.txt)"
-	exit 1
-fi
-
-echo ""
-echo "Enter DHIS Server DataValueSets API URL (eg. http://localhost:8080/dhis/api/dataValueSets): "; read DHIS_URL
-echo "Enter DHIS Server Login UserName : "; read DHIS_USER
-echo "Enter DHIS Server Login Password : "; stty -echo; read DHIS_PASS; stty echo;
+	echo "Are your DHIS Data elements for each EMT indicators well mapped? (Y/N)"; read DATA_ELEMENTS_CONFIGURED
 	
-if [ "$DHIS_URL" == "" ] || [ "$DHIS_USER" == "" ] || [ "$DHIS_PASS" == "" ]; then
-	echo "DHIS URL, UserName and Password can't be empty and therefore DHIS Server configuration has been ignored"
-	DHIS_URL=""
-	DHIS_USER=""
-	DHIS_PASS=""
-fi
+	if [ "$DATA_ELEMENTS_CONFIGURED" != "y" ] && [ "$DATA_ELEMENTS_CONFIGURED" != "Y" ] && [ "$DATA_ELEMENTS_CONFIGURED" != "yes" ] && [ "$DATA_ELEMENTS_CONFIGURED" != "YES" ] && [ "$DATA_ELEMENTS_CONFIGURED" != "Yes" ]; then
+		echo "Please manually correct those mappings at: $EMT_DIR/emt-to-dhis-mapping.txt"
+		exit 1
+	fi
+	
+	echo ""
+	echo "Please enter fosaid or DHIS Organization unit code or Uniquely assigned ID for this server!!!"; read DHIS_ORG_FOSID
 
-cat <<EOF > $EMT_MAIN_CONFIG
+	DHIS_ORG_UID=`sed '/^\#/d' "$EMT_DIR/emt-to-dhis-mapping.txt" | grep "$DHIS_ORG_FOSID" | tail -n 1 | cut -d "=" -f2-`
+
+	if [ "$DHIS_ORG_FOSID" == "" ] || [ "$DHIS_ORG_UID" == "" ]; then
+		echo "fosid for this Server is Required to configure this tool (Ask from the tool providers if you are not sure what this is or add a new mapping at $EMT_DIR/emt-to-dhis-mapping.txt)"
+		exit 1
+	fi
+
+	echo ""
+	echo "Enter DHIS Server DataValueSets API URL (eg. http://localhost:8080/dhis/api/dataValueSets): "; read DHIS_URL
+	echo "Enter DHIS Server Login UserName : "; read DHIS_USER
+	echo "Enter DHIS Server Login Password : "; stty -echo; read DHIS_PASS; stty echo;
+	
+	if [ "$DHIS_URL" == "" ] || [ "$DHIS_USER" == "" ] || [ "$DHIS_PASS" == "" ]; then
+		echo "DHIS URL, UserName and Password can't be empty and therefore DHIS Server configuration has been ignored"
+		DHIS_URL=""
+		DHIS_USER=""
+		DHIS_PASS=""
+	fi
+
+	cat <<EOF > $EMT_MAIN_CONFIG
 openmrs_app_name=$OPENMRS_APP_NAME
 openmrs_data_directory=$OPENMRS_DATA_DIR
 openmrs_backups_directory=$OPENMRS_DATA_DIR/backups

@@ -1,7 +1,41 @@
+## For this tool to report to DHIS/HMIS; DHIS data from the actual DHIS server must be first mapped correctly to much the tool's data
+## This is done through two steps;
+##	Correcting mappings for DHIS Data Elements
+##	Correcting mappings for Organization Units
+## NOTE: Please only edit the lines in between the -----------------... lines, and only text after the equals (=) character
+
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-fosaid=dhis2uID is the format each mapping must follow (fosaid is the unique server Id that needs to be mapped to an existing DHIS UID)
-This list is provided as part of the Study Sites/servers by the Rwanda SPU study team
-The last mapping whose fosid is JEMBI is for the Jembi test environment
+## MAPPING DHIS DATA ELEMENTS
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## emtdataelementcode=dataelement is the data element format to follow while mapping
+------------------------------------------------------------------------------------
+DATA-ELEMENT_systemId=yBHJmoeteNR
+DATA-ELEMENT_openmrsAppName=ec9fC1xmg8R
+DATA-ELEMENT_primaryCareDays=rb9ef1D53Fv
+DATA-ELEMENT_primaryCareHours=VDEnb2bEQH3
+DATA-ELEMENT_totalEncounters=RYe2tuO9njZ
+DATA-ELEMENT_totalObservations=NorJph8rRjt
+DATA-ELEMENT_totalUsers=GKi8zBGuC3p
+DATA-ELEMENT_totalVisits=nqGCy0uyzm8
+DATA-ELEMENT_totalPatientsNew=aGdN2xl9nUj
+DATA-ELEMENT_totalPatientsActive=hk0HYxaBPtz
+DATA-ELEMENT_openmrsUptime=OBJQIpvppBt
+DATA-ELEMENT_systemUptime-thisWeek=CrZDptrDUqA
+DATA-ELEMENT_systemUptime-lastWeek=h08FIw8cVUD
+DATA-ELEMENT_systemUptime-lastMonth=q9MRIo5DX4I
+DATA-ELEMENT_totalMemory=FRANuyR9bKI
+DATA-ELEMENT_usedMemory=QZMqiNLOZNH
+DATA-ELEMENT_freeMemory=ZPrLSHvWDm8
+DATA-ELEMENT_systemStartupCounts=q8LwlSrBOSj
+------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## MAPPING DHIS ORGANISATION UNITS
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## fosaid=dhis2uID is the format each mapping must follow (fosaid is the unique server Id that needs to be mapped to an existing DHIS UID)
+## This list is provided as part of the Study Sites/servers by the Rwanda SPU study team
+## The last mapping whose fosid is JEMBI is for the Jembi test environment
 ------------------------------------------------------------------------------------
 107=BQ6Kvt02NYY
 1103=ugY1922BR55
@@ -127,3 +161,4 @@ The last mapping whose fosid is JEMBI is for the Jembi test environment
 94=Qp6EM25AmgR
 96=UNpU4eA39Nv
 JEMBI=vjFcsoL24z5
+------------------------------------------------------------------------------------
