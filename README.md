@@ -30,3 +30,11 @@ export PATH=$PATH:$MYSQL_BIN
 * To re-configure or setup an already configured openmrs instance, run commmand 7 which technically removes the previous configuration and creates a new one using the details provided
 
 NOTE: to run these commands for anon sudoer user exlude sudo from commands 2 to 5 after making both /usr/local/bin and /usr/local/share/etc readable and writable by your current logged in user 
+
+
+Building .deb package
+========================
+* run command ```
+sudo apt-get install devscripts dh-make;
+./buildDeb.sh
+```

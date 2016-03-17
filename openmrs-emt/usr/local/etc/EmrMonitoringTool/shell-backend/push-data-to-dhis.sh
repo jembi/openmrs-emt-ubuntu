@@ -22,14 +22,14 @@ pushDataToDHIS() {
 			wget -q --tries=10 --timeout=20 --spider http://google.com
 			if [[ "$?" -eq 0 ]]
 				then
-        			curl -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+        			curl -k -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
         			
         			if [ -d "$DHIS_NON_UPLOADED" ]; then
         				DHIS_NON_UPLOADED_FILES=($(find "$DHIS_NON_UPLOADED" -name "dhis-emt-datasetValueSets_*.json"))
         				
         				for DHIS_NON_UPLOADED_FILE in "${DHIS_NON_UPLOADED_FILES[@]}"
 						do
-							curl -d @$DHIS_NON_UPLOADED_FILE $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+							curl -k -d @$DHIS_NON_UPLOADED_FILE $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
 						done
 						rmdir $DHIS_NON_UPLOADED
         			fi

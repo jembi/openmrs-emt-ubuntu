@@ -1,5 +1,5 @@
 Source: openmrs-emt
-Standards-Version: 1.0
+Standards-Version: 1.1
 Section: base
 Priority: optional
 Maintainer: Kaweesi Joseph <k.joseph@openmrs.org>
@@ -8,4 +8,5 @@ Package: openmrs-emt
 Section: base
 Priority: optional
 Architecture: all
+Depends: curl
 Description: OpenMRS monitoring tool for MoH Rwanda
