@@ -34,7 +34,8 @@ NOTE: to run these commands for anon sudoer user exlude sudo from commands 2 to 
 
 Building .deb package
 ========================
-* run command ```
+* run command 
+```
 sudo apt-get install devscripts dh-make;
 ./buildDeb.sh
 ```
