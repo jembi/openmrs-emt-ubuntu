@@ -31,7 +31,7 @@ pushDataToDHIS() {
 						do
 							curl -k -d @$DHIS_NON_UPLOADED_FILE $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
 						done
-						rmdir $DHIS_NON_UPLOADED
+						rm -r $DHIS_NON_UPLOADED
         			fi
 				else
         			if [ ! -d "$DHIS_NON_UPLOADED" ]; then
