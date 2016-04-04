@@ -88,4 +88,5 @@ fi
 ## Running the scripts right now to make some data logging
 $EMT_INSTALL_DIR/shell-backend/heartbeat.sh
 $EMT_INSTALL_DIR/shell-backend/openmrs-heartbeat.sh
+sleep 60
 $EMT_INSTALL_DIR/shell-backend/generate-example-report.sh
