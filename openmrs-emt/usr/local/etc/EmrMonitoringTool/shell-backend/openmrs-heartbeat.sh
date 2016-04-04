@@ -51,23 +51,6 @@ openmrsHeartbeat() {
 	SYSTEM_ID=`hostname`-`ifconfig eth0 | grep HWaddr | awk '{ print $NF}' | sed 's/://g'`
 	NOW=`date +%Y%m%d-%H%M%S`
 
-	# check Tomcat and OpenMRS webapp
-	wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
-	if [ $? -ne 0 ]; then
-  		# do it again to make sure this system wasn't just too busy in this moment
-  		sleep 60
-  		wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
-  		if [ $? -ne 0 ]; then
-    		OPENMRS_STATUS="not responding"
-  		else
-    		OPENMRS_STATUS="responding after 1 minute"
-  		fi
-	else
-  		OPENMRS_STATUS="responding"
-	fi
-	rm -f index.htm*
-	rm -f loginServlet*
-
 	# get encounter/obs stats right from DB
 	NUMBER_ENCOUNTERS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "select count(*) from encounter where voided=0"`
 	NUMBER_OBS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "select count(*) from obs where voided=0"`
@@ -85,7 +68,26 @@ openmrsHeartbeat() {
 	NUMBER_NEW_PATIENTS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "select count(*) from encounter where encounter_type in (1,3)"`
 	NUMBER_VISITS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "select count(*) from encounter where encounter_type in (2,4)"`
 	MOH_STATUS="$NUMBER_ACTIVE_PATIENTS;$NUMBER_NEW_PATIENTS;$NUMBER_VISITS"
-
+	
+	# check Tomcat and OpenMRS webapp
+	OPENMRS_STATUS="not set to run"
+	if [ "$OPENMRS_USER" != "" ] && [ "$OPENMRS_PASS" != "" ]; then
+		wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
+		if [ $? -ne 0 ]; then
+  			# do it again to make sure this system wasn't just too busy in this moment
+  			sleep 60
+  			wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
+  			if [ $? -ne 0 ]; then
+    			OPENMRS_STATUS="not responding"
+  			else
+    			OPENMRS_STATUS="responding after 1 minute"
+ 	 		fi
+		else
+  			OPENMRS_STATUS="responding"
+		fi
+		rm -f index.htm*
+		rm -f loginServlet*
+	fi
 	echo "$NOW;$SYSTEM_ID;OPENMRS-HEARTBEAT;$OPENMRS_STATUS;$MYSQL_STATUS;$BACKUP_STATUS;$MOH_STATUS">> $LOG
 }
 
@@ -96,3 +98,4 @@ for i in "${EMT_CONFIG_FILES[@]}"
 do
 	openmrsHeartbeat "$i"
 done
+
