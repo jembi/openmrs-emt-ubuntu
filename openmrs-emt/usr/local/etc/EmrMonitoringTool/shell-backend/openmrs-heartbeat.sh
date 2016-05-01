@@ -13,6 +13,7 @@ openmrsHeartbeat() {
 	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
 	OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name' | tail -n 1 | cut -d "=" -f2-`
 	LOG=$OMRS_DATA_DIR/EmrMonitoringTool/emt.log
+	PATIENT_LOG=$OMRS_DATA_DIR/EmrMonitoringTool/emt-patient.log
 
 	if [ ! -f "$LOG" ]; then
 		echo "ERROR: $LOG must exist to proceed, make sure you successfully run improved-installation.sh first"
@@ -51,28 +52,15 @@ openmrsHeartbeat() {
 	SYSTEM_ID=`hostname`-`ifconfig eth0 | grep HWaddr | awk '{ print $NF}' | sed 's/://g'`
 	NOW=`date +%Y%m%d-%H%M%S`
 
-	# check Tomcat and OpenMRS webapp
-	wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
-	if [ $? -ne 0 ]; then
-  		# do it again to make sure this system wasn't just too busy in this moment
-  		sleep 60
-  		wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
-  		if [ $? -ne 0 ]; then
-    		OPENMRS_STATUS="not responding"
-  		else
-    		OPENMRS_STATUS="responding after 1 minute"
-  		fi
-	else
-  		OPENMRS_STATUS="responding"
-	fi
-	rm -f index.htm*
-	rm -f loginServlet*
-
 	# get encounter/obs stats right from DB
 	NUMBER_ENCOUNTERS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "select count(*) from encounter where voided=0"`
 	NUMBER_OBS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "select count(*) from obs where voided=0"`
 	NUMBER_USERS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "select count(*) from users where retired=0"`
+	TOTAL_VIRAL_LOAD_TESTS_EVER=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "SELECT COUNT(DISTINCT (person_id)) FROM obs WHERE concept_id = 856/*HIV VIRAL LOAD concept*/ AND person_id IN (SELECT DISTINCT patient_id FROM patient) AND voided=0"`
+	TOTAL_VIRAL_LOAD_TESTS_LAST_SIX_MONTHS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "SELECT COUNT(DISTINCT (person_id)) FROM obs WHERE concept_id = 856/*HIV VIRAL LOAD concept*/ AND person_id IN (SELECT DISTINCT patient_id FROM patient) AND obs_datetime > DATE_SUB(now(), INTERVAL 6 MONTH) AND voided=0"`
+	TOTAL_VIRAL_LOAD_TESTS_LAST_YEAR=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N  -e "SELECT COUNT(DISTINCT (person_id)) FROM obs WHERE concept_id = 856/*HIV VIRAL LOAD concept*/ AND person_id IN (SELECT DISTINCT patient_id FROM patient) AND obs_datetime > DATE_SUB(now(), INTERVAL 12 MONTH) AND voided=0"`
 	MYSQL_STATUS="$NUMBER_ENCOUNTERS;$NUMBER_OBS;$NUMBER_USERS"
+	VIRAL_LOAD_STATUS="PATIENTS_WITH_VIRAL_LOAD_TEST_RESULTS(EVER,LAST6MONTHS,LASTYEAR);$NOW;$SYSTEM_ID:::$TOTAL_VIRAL_LOAD_TESTS_EVER;$TOTAL_VIRAL_LOAD_TESTS_LAST_SIX_MONTHS;$TOTAL_VIRAL_LOAD_TESTS_LAST_YEAR"
 	
 	# backup status
 	OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory' | tail -n 1 | cut -d "=" -f2-`
@@ -85,8 +73,31 @@ openmrsHeartbeat() {
 	NUMBER_NEW_PATIENTS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "select count(*) from encounter where encounter_type in (1,3)"`
 	NUMBER_VISITS=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "select count(*) from encounter where encounter_type in (2,4)"`
 	MOH_STATUS="$NUMBER_ACTIVE_PATIENTS;$NUMBER_NEW_PATIENTS;$NUMBER_VISITS"
+	
+	# check Tomcat and OpenMRS webapp
+	OPENMRS_STATUS="not set to run"
+	if [ "$OPENMRS_USER" != "" ] && [ "$OPENMRS_PASS" != "" ]; then
+		wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
+		if [ $? -ne 0 ]; then
+  			# do it again to make sure this system wasn't just too busy in this moment
+  			sleep 60
+  			wget --quiet --no-check-certificate --post-data "uname=$OPENMRS_USER&pw=$OPENMRS_PASS" $OPENMRS_URL/loginServlet
+  			if [ $? -ne 0 ]; then
+    			OPENMRS_STATUS="not responding"
+  			else
+    			OPENMRS_STATUS="responding after 1 minute"
+ 	 		fi
+		else
+  			OPENMRS_STATUS="responding"
+		fi
+		rm -f index.htm*
+		rm -f loginServlet*
+	fi
+	echo "$NOW;$SYSTEM_ID;OPENMRS-HEARTBEAT;$OPENMRS_STATUS;$MYSQL_STATUS;$BACKUP_STATUS;$MOH_STATUS"
 
 	echo "$NOW;$SYSTEM_ID;OPENMRS-HEARTBEAT;$OPENMRS_STATUS;$MYSQL_STATUS;$BACKUP_STATUS;$MOH_STATUS">> $LOG
+	
+	echo "$VIRAL_LOAD_STATUS" >> $PATIENT_LOG
 }
 
 EMT_DIR=/usr/local/etc/EmrMonitoringTool

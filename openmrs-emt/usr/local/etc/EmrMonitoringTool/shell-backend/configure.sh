@@ -12,6 +12,7 @@ fi
 EMT_INSTALL_DIR=$1
 OPENMRS_INSTALL_DIR=$2
 LOG=$OPENMRS_INSTALL_DIR/EmrMonitoringTool/emt.log
+PATIENT_LOG=$OPENMRS_INSTALL_DIR/EmrMonitoringTool/emt-patient.log
 CONFIG=$OPENMRS_INSTALL_DIR/EmrMonitoringTool/emt.properties
 DHIS=$OPENMRS_INSTALL_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 SYSTEM_ID=`hostname`-`ifconfig eth0 | grep HWaddr | awk '{ print $NF}' | sed 's/://g'`
@@ -51,6 +52,11 @@ if [ ! -f "$LOG" ]; then
 	touch $LOG
 	chmod 666 $LOG
 fi
+if [ ! -f "$PATIENT_LOG" ]; then
+	touch $PATIENT_LOG
+	chmod 666 $PATIENT_LOG
+fi
+
 echo "$NOW;$SYSTEM_ID;EMT-INSTALL;0.5" >> $LOG
 
 #creating and setting read&write for $DHIS

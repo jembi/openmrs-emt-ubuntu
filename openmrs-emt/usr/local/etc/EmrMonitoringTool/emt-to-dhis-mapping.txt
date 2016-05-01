@@ -27,6 +27,9 @@ DATA-ELEMENT_totalMemory=FRANuyR9bKI
 DATA-ELEMENT_usedMemory=QZMqiNLOZNH
 DATA-ELEMENT_freeMemory=ZPrLSHvWDm8
 DATA-ELEMENT_systemStartupCounts=q8LwlSrBOSj
+DATA-ELEMENT_patientsViralLoadTestResults_ever=AB7Nj3FNvR6
+DATA-ELEMENT_patientsViralLoadTestResults_last6Months=TIdLXyneWYd
+DATA-ELEMENT_patientsViralLoadTestResults_LastYear=D30SnV0TGws
 ------------------------------------------------------------------------------------
 
 
