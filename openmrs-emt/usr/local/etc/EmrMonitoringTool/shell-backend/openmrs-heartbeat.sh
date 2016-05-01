@@ -93,11 +93,8 @@ openmrsHeartbeat() {
 		rm -f index.htm*
 		rm -f loginServlet*
 	fi
-	echo "$NOW;$SYSTEM_ID;OPENMRS-HEARTBEAT;$OPENMRS_STATUS;$MYSQL_STATUS;$BACKUP_STATUS;$MOH_STATUS"
-
 	echo "$NOW;$SYSTEM_ID;OPENMRS-HEARTBEAT;$OPENMRS_STATUS;$MYSQL_STATUS;$BACKUP_STATUS;$MOH_STATUS">> $LOG
-	
-	echo "$VIRAL_LOAD_STATUS" >> $PATIENT_LOG
+	echo "$VIRAL_LOAD_STATUS">> $PATIENT_LOG
 }
 
 EMT_DIR=/usr/local/etc/EmrMonitoringTool
@@ -107,3 +104,4 @@ for i in "${EMT_CONFIG_FILES[@]}"
 do
 	openmrsHeartbeat "$i"
 done
+

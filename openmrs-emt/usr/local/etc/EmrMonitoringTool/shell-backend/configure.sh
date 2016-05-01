@@ -90,3 +90,9 @@ if [ "$MODULES_OWNER" != "tomcat6" ]; then
   echo ""
   echo "WARNING: OpenMRS modules most likely can NOT be uploaded with OpenMRS!" 
 fi
+
+## Running the scripts right now to make some data logging
+$EMT_INSTALL_DIR/shell-backend/heartbeat.sh
+$EMT_INSTALL_DIR/shell-backend/openmrs-heartbeat.sh
+sleep 60
+$EMT_INSTALL_DIR/shell-backend/generate-example-report.sh

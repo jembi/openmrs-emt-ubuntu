@@ -1,6 +1,7 @@
 #!/bin/bash
 
-mkdir /usr/local/etc
-mkdir /usr/local/etc/EmrMonitoringTool
-mkdir /usr/local/etc/EmrMonitoringTool/shell-backend
-mkdir /usr/local/etc/EmrMonitoringTool/shell-backend/lib
+if [ -d "/usr/local/etc/EmrMonitoringTool" ]; then
+	rm -r /usr/local/etc/EmrMonitoringTool
+fi
+
+mkdir -p /usr/local/etc/EmrMonitoringTool/shell-backend/lib

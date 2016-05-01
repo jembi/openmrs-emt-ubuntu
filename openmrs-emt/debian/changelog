@@ -1,3 +1,9 @@
+openmrs-emt (1.1.2) trusty; urgency=medium
+
+  * Release Debian Build 1.1.2
+
+ -- Kaweesi Joseph <k.joseph@openmrs.org>  Mon, 4 Apr 2016 16:14:14 +0300
+
 openmrs-emt (1.1.1) trusty; urgency=medium
 
   * Release Debian Build 1.1.1

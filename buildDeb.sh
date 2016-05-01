@@ -4,7 +4,8 @@ if [ ! -d "target" ]
 	then
 		mkdir target
 	else
-		rm -r target/*
+		rm -r target
+		mkdir target
 fi
 
 cp -r openmrs-emt/ target
