@@ -57,7 +57,7 @@ if [ ! -f "$PATIENT_LOG" ]; then
 	chmod 666 $PATIENT_LOG
 fi
 
-echo "$NOW;$SYSTEM_ID;EMT-INSTALL;0.5" >> $LOG
+echo "$NOW;$SYSTEM_ID;EMT-INSTALL;1.2" >> $LOG
 
 #creating and setting read&write for $DHIS
 if [ ! -f "$DHIS" ]; then
