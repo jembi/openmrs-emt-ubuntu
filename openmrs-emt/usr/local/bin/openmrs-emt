@@ -27,7 +27,7 @@ elif [ "$1" == "-status" ]; then
 	do
 		if [ ! -f "$i" ]; then
 			echo "$i is missing!!!, this means the tool is installed but messed around with"
-			exit 1å
+			exit 1
 		fi
 		if [ -f "$i" ]; then
 			#TODO increment each openmrs webapp app and complete message as configured, then read the file to get openmrs data directory to check if the .log, .properties and .json files exist and append relevant messages respectively
@@ -139,7 +139,21 @@ if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 		DHIS_USER=""
 		DHIS_PASS=""
 	fi
-
+	
+	echo ""
+	echo "Enter OpenMRS Version (1.6.7) : "; read OPENMRS_VERSION
+	echo "Enter OpenMRS Module's folder ($OPENMRS_DATA_DIR/modules) : "; read OPENMRS_INSTALLED_MODULES_PATH
+	
+	if [ "$OPENMRS_VERSION" == "" ]; then
+		OPENMRS_VERSION=1.6.7
+	fi
+	if [ "$OPENMRS_INSTALLED_MODULES_PATH" == "" ]; then
+		OPENMRS_INSTALLED_MODULES_PATH=$OPENMRS_DATA_DIR/modules
+	fi
+	if [ ! -d "$OPENMRS_INSTALLED_MODULES_PATH" ]; then
+		OPENMRS_INSTALLED_MODULES_PATH=$OMRS_DATA_DIR/$OMRS_APP_NAME_modules
+	fi
+	
 	cat <<EOF > $EMT_MAIN_CONFIG
 openmrs_app_name=$OPENMRS_APP_NAME
 openmrs_data_directory=$OPENMRS_DATA_DIR
@@ -149,6 +163,8 @@ dhis_url=$DHIS_URL
 dhis_user=$DHIS_USER
 dhis_pass=$DHIS_PASS
 dhis_org_unit_uid=$DHIS_ORG_UID
+openmrs_version=$OPENMRS_VERSION
+openmrs_installed_modules_path=$OPENMRS_INSTALLED_MODULES_PATH
 EOF
 	echo ""
 	echo "INFO: You can change your provided configurations by editing: $EMT_MAIN_CONFIG";

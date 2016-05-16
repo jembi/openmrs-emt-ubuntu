@@ -7,7 +7,7 @@
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ## MAPPING DHIS DATA ELEMENTS
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-## emtdataelementcode=dataelement is the data element format to follow while mapping
+## 'emtdataelementcode=dhis-dataelement-id' is the data element format to follow while mapping
 ------------------------------------------------------------------------------------
 DATA-ELEMENT_systemId=yBHJmoeteNR
 DATA-ELEMENT_openmrsAppName=ec9fC1xmg8R
@@ -30,6 +30,24 @@ DATA-ELEMENT_systemStartupCounts=q8LwlSrBOSj
 DATA-ELEMENT_patientsViralLoadTestResults_ever=AB7Nj3FNvR6
 DATA-ELEMENT_patientsViralLoadTestResults_last6Months=TIdLXyneWYd
 DATA-ELEMENT_patientsViralLoadTestResults_LastYear=D30SnV0TGws
+DATA-ELEMENT_systemInfo_operatingSystem=CRThksbOPAd
+DATA-ELEMENT_systemInfo_operatingSystemArch=EFfJ4CVvac2
+DATA-ELEMENT_systemInfo_operatingSystemVersion=l76OuWQxBYa
+DATA-ELEMENT_systemInfo_javaVersion=FmjhhJQyLoy
+DATA-ELEMENT_systemInfo_javaVendor=TuBY7HgyJ7J
+DATA-ELEMENT_systemInfo_jvmVersion=RgJN8fbRRuW
+DATA-ELEMENT_systemInfo_jvmVendor=yIMQP0rsprI
+DATA-ELEMENT_systemInfo_javaRuntimeName=SrKrLKmigUg
+DATA-ELEMENT_systemInfo_javaRuntimeVersion=ixpB1MGxTOt
+DATA-ELEMENT_systemInfo_userName=KiOmWTYmc4F
+DATA-ELEMENT_systemInfo_systemLanguage=RHNugiFzCnz
+DATA-ELEMENT_systemInfo_systemTimezone=GldPX7AtrxQ
+DATA-ELEMENT_systemInfo_systemDateTime=vXlzpA8wi6K
+DATA-ELEMENT_systemInfo_fileSystemEncoding=RlDJSS2SRXL
+DATA-ELEMENT_systemInfo_userDirectory=Fy0lelr1WAB
+DATA-ELEMENT_systemInfo_tempDirectory=FveZHUNsC1o
+DATA-ELEMENT_systemInfo_openMRSVersion=Gnpcar514A3
+DATA-ELEMENT_systemInfo_installedModules=ICTGPRAVZVZ
 ------------------------------------------------------------------------------------
 
 
