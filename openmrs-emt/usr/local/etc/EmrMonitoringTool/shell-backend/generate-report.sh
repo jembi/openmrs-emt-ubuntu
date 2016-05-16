@@ -23,9 +23,14 @@ generateReportForConfig() {
 	LOGFILE=$OMRS_DATA_DIR/EmrMonitoringTool/emt.log
 	DHISDATAVALUESETS=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	
+	OMRS_VERSION=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_version' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_SPECIFIC_INFO_MODULES_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_installed_modules_path' | tail -n 1 | cut -d "=" -f2-`
+	
+	OMRS_SPECIFIC_INFO="oVersion:$OMRS_VERSION;oModulesFolderPath:$OMRS_SPECIFIC_INFO_MODULES_DIR"
+	
 	BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-	java -cp "$BASEDIR/lib/*" org.openmrs.module.emtfrontend.Emt $STARTDATE $ENDDATE $LOGFILE $OUTPUTPDF $DHISDATAVALUESETS $OMRS_APP_NAME $DHIS_ORG_UID
+	java -cp "$BASEDIR/lib/*" org.openmrs.module.emtfrontend.Emt $STARTDATE $ENDDATE $LOGFILE $OUTPUTPDF $DHISDATAVALUESETS $OMRS_APP_NAME $DHIS_ORG_UID $OMRS_SPECIFIC_INFO
 }
 
 STARTDATE=$1
