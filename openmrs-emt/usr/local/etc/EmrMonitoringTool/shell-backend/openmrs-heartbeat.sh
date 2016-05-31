@@ -10,8 +10,8 @@ openmrsHeartbeat() {
 
 	PATH=$PATH:/usr/bin:/sbin
 	BASEDIR=$(dirname $0)
-	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
-	OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name=' | tail -n 1 | cut -d "=" -f2-`
 	LOG=$OMRS_DATA_DIR/EmrMonitoringTool/emt.log
 	PATIENT_LOG=$OMRS_DATA_DIR/EmrMonitoringTool/emt-patient.log
 
@@ -28,11 +28,11 @@ openmrsHeartbeat() {
 	fi
 
 	# Read properties from properties file
-	DB_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.username' | tail -n 1 | cut -d "=" -f2-`
-	DB_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password' | tail -n 1 | cut -d "=" -f2-`
-	DB_URL=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.url' | tail -n 1 | cut -d "=" -f2-`
-	OPENMRS_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.username' | tail -n 1 | cut -d "=" -f2-`
-	OPENMRS_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.password' | tail -n 1 | cut -d "=" -f2-`
+	DB_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.username=' | tail -n 1 | cut -d "=" -f2-`
+	DB_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password=' | tail -n 1 | cut -d "=" -f2-`
+	DB_URL=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.url=' | tail -n 1 | cut -d "=" -f2-`
+	OPENMRS_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.username=' | tail -n 1 | cut -d "=" -f2-`
+	OPENMRS_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.password=' | tail -n 1 | cut -d "=" -f2-`
 
 	# Check properties could be read
 	if [ -z "$DB_USER" ] || [ -z "$DB_PASS" ] || [ -z "$DB_URL" ] || [ -z OPENMRS_USER ] || [ -z OPENMRS_PASS ]; then
@@ -47,7 +47,7 @@ openmrsHeartbeat() {
 	  DB_NAME="openmrs"
 	fi
 
-	OPENMRS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_url' | tail -n 1 | cut -d "=" -f2-`
+	OPENMRS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_url=' | tail -n 1 | cut -d "=" -f2-`
 
 	SYSTEM_ID=`hostname`-`ifconfig eth0 | grep HWaddr | awk '{ print $NF}' | sed 's/://g'`
 	NOW=`date +%Y%m%d-%H%M%S`
@@ -63,7 +63,7 @@ openmrsHeartbeat() {
 	VIRAL_LOAD_STATUS="PATIENTS_WITH_VIRAL_LOAD_TEST_RESULTS(EVER,LAST6MONTHS,LASTYEAR);$NOW;$SYSTEM_ID:::$TOTAL_VIRAL_LOAD_TESTS_EVER;$TOTAL_VIRAL_LOAD_TESTS_LAST_SIX_MONTHS;$TOTAL_VIRAL_LOAD_TESTS_LAST_YEAR"
 	
 	# backup status
-	OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory=' | tail -n 1 | cut -d "=" -f2-`
 	if [ ! -d "$OMRS_BACKUP_DIR" ]; then
 		mkdir $OMRS_BACKUP_DIR
 	fi

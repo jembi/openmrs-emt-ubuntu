@@ -2,7 +2,7 @@
 
 heartbeat() {
 	EMT_MAIN_CONFIG=$1
-	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
 	LOG=$OMRS_DATA_DIR/EmrMonitoringTool/emt.log
 
 	if [ ! -f "$LOG" ]; then

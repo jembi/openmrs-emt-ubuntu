@@ -17,14 +17,14 @@ generateReportForConfig() {
 		exit 1
 	fi
 
-	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
-	OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name' | tail -n 1 | cut -d "=" -f2-`
-	DHIS_ORG_UID=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_org_unit_uid' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name=' | tail -n 1 | cut -d "=" -f2-`
+	DHIS_ORG_UID=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_org_unit_uid=' | tail -n 1 | cut -d "=" -f2-`
 	LOGFILE=$OMRS_DATA_DIR/EmrMonitoringTool/emt.log
 	DHISDATAVALUESETS=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	
-	OMRS_VERSION=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_version' | tail -n 1 | cut -d "=" -f2-`
-	OMRS_SPECIFIC_INFO_MODULES_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_installed_modules_path' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_VERSION=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_version=' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_SPECIFIC_INFO_MODULES_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_installed_modules_path=' | tail -n 1 | cut -d "=" -f2-`
 	
 	OMRS_SPECIFIC_INFO="oVersion:$OMRS_VERSION;oModulesFolderPath:$OMRS_SPECIFIC_INFO_MODULES_DIR"
 	

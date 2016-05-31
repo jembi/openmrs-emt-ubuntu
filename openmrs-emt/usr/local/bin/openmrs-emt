@@ -32,8 +32,8 @@ elif [ "$1" == "-status" ]; then
 		if [ -f "$i" ]; then
 			#TODO increment each openmrs webapp app and complete message as configured, then read the file to get openmrs data directory to check if the .log, .properties and .json files exist and append relevant messages respectively
 			#FINAL_STATUS_MESSAGE += ""
-			OPENMRS_WEB_APP_NAME=`sed '/^\#/d' "$i" | grep 'openmrs_app_name' | tail -n 1 | cut -d "=" -f2-`
-			OPENMRS_DATA_FOLDER=`sed '/^\#/d' "$i" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
+			OPENMRS_WEB_APP_NAME=`sed '/^\#/d' "$i" | grep 'openmrs_app_name=' | tail -n 1 | cut -d "=" -f2-`
+			OPENMRS_DATA_FOLDER=`sed '/^\#/d' "$i" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
 			
 			echo "$OPENMRS_WEB_APP_NAME is installed"
 			
@@ -121,7 +121,7 @@ if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 	echo ""
 	echo "Please enter fosaid or DHIS Organization unit code or Uniquely assigned ID for this server!!!"; read DHIS_ORG_FOSID
 
-	DHIS_ORG_UID=`sed '/^\#/d' "$EMT_DIR/emt-to-dhis-mapping.txt" | grep "$DHIS_ORG_FOSID" | tail -n 1 | cut -d "=" -f2-`
+	DHIS_ORG_UID=`sed '/^\#/d' "$EMT_DIR/emt-to-dhis-mapping.txt" | grep "$DHIS_ORG_FOSID=" | tail -n 1 | cut -d "=" -f2-`
 
 	if [ "$DHIS_ORG_FOSID" == "" ] || [ "$DHIS_ORG_UID" == "" ]; then
 		echo "fosid for this Server is Required to configure this tool (Ask from the tool providers if you are not sure what this is or add a new mapping at $EMT_DIR/emt-to-dhis-mapping.txt)"
@@ -171,10 +171,10 @@ EOF
 	echo ""
 fi
 
-OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name' | tail -n 1 | cut -d "=" -f2-`
-OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
-OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory' | tail -n 1 | cut -d "=" -f2-`
-OMRS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_url' | tail -n 1 | cut -d "=" -f2-`
+OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name=' | tail -n 1 | cut -d "=" -f2-`
+OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
+OMRS_BACKUP_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_backups_directory=' | tail -n 1 | cut -d "=" -f2-`
+OMRS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_url=' | tail -n 1 | cut -d "=" -f2-`
 
 if [ ! -d "$OMRS_DATA_DIR" ]; then
 	echo "ERROR: $OMRS_DATA_DIR must exist to proceed, confirm that it is the right OpenMRS Data Directory/folder"

@@ -35,7 +35,7 @@ cleanUpDHISDataValueSet() {
 
 cleanUpDHISReports() {
 	EMT_MAIN_CONFIG=$1
-	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
 	DHISDATAVALUES=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	DHISDATADIR=$OMRS_DATA_DIR/EmrMonitoringTool/NotUploadedToDHIS
 	

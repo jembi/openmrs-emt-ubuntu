@@ -10,10 +10,10 @@ pushDataToDHIS() {
 		exit 1
 	fi
 
-	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory' | tail -n 1 | cut -d "=" -f2-`
-	DHIS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_url' | tail -n 1 | cut -d "=" -f2-`
-	DHIS_USERNAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_user' | tail -n 1 | cut -d "=" -f2-`
-	DHIS_PASS=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_pass' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
+	DHIS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_url=' | tail -n 1 | cut -d "=" -f2-`
+	DHIS_USERNAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_user=' | tail -n 1 | cut -d "=" -f2-`
+	DHIS_PASS=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_pass=' | tail -n 1 | cut -d "=" -f2-`
 	DHISDATAVALUES=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	DHIS_NON_UPLOADED=$OMRS_DATA_DIR/EmrMonitoringTool/NotUploadedToDHIS
 	
