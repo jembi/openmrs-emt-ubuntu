@@ -12,24 +12,30 @@ pushDataToDHIS() {
 
 	OMRS_DATA_DIR=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_data_directory=' | tail -n 1 | cut -d "=" -f2-`
 	DHIS_URL=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_url=' | tail -n 1 | cut -d "=" -f2-`
+	OMRS_APP_NAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'openmrs_app_name=' | tail -n 1 | cut -d "=" -f2-`
 	DHIS_USERNAME=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_user=' | tail -n 1 | cut -d "=" -f2-`
 	DHIS_PASS=`sed '/^\#/d' "$EMT_MAIN_CONFIG" | grep 'dhis_pass=' | tail -n 1 | cut -d "=" -f2-`
 	DHISDATAVALUES=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	DHIS_NON_UPLOADED=$OMRS_DATA_DIR/EmrMonitoringTool/NotUploadedToDHIS
+	CURL_LOG_FILE=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-curl.log
 	
 	if [ "$DHIS_URL" != "" ] && [ "$DHIS_USERNAME" != "" ] && [ "$DHIS_PASS" != "" ]
 		then
 			wget -q --tries=10 --timeout=20 --spider http://google.com
 			if [[ "$?" -eq 0 ]]
 				then
-        			curl -k -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+        			CURL_LOG=`curl -k -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS`
+        			echo "$OMRS_APP_NAME:::::$CURL_LOG">>"$CURL_LOG_FILE"
+        			echo "">>"$CURL_LOG_FILE"
         			
         			if [ -d "$DHIS_NON_UPLOADED" ]; then
         				DHIS_NON_UPLOADED_FILES=($(find "$DHIS_NON_UPLOADED" -name "dhis-emt-datasetValueSets_*.json"))
         				
         				for DHIS_NON_UPLOADED_FILE in "${DHIS_NON_UPLOADED_FILES[@]}"
 						do
-							curl -k -d @$DHIS_NON_UPLOADED_FILE $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS
+							CURL_LOG=`curl -k -d @$DHIS_NON_UPLOADED_FILE $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS`
+							echo "$OMRS_APP_NAME:::::$CURL_LOG">>"$CURL_LOG_FILE"
+							echo "">>"$CURL_LOG_FILE"
 						done
 						rm -r $DHIS_NON_UPLOADED
         			fi

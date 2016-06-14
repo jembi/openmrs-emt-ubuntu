@@ -149,7 +149,7 @@ if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 	# Read properties from properties file
 	# Check runtime properties file exists
 	if [ ! -f "$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"-runtime.properties ]; then
-  		echo "The OpenMRS Runtime Properties file for $OPENMRS_APP_NAME does not exist!!! Make sure the OpenMRS/EMR Instance you are configuring exists"
+  		echo "The OpenMRS Runtime Properties file for $OPENMRS_APP_NAME does not exist at: $OPENMRS_DATA_DIR/$OPENMRS_APP_NAME-runtime.properties!!! Make sure the OpenMRS/EMR Instance you are configuring exists"
   		exit 1
 	fi
 	OPENMRS_PROP_FILE="$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"-runtime.properties
