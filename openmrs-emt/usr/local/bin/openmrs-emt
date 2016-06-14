@@ -141,17 +141,37 @@ if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 	fi
 	
 	echo ""
-	echo "Enter OpenMRS Version (1.6.7) : "; read OPENMRS_VERSION
-	echo "Enter OpenMRS Module's folder ($OPENMRS_DATA_DIR/modules) : "; read OPENMRS_INSTALLED_MODULES_PATH
-	
+	echo "Enter OpenMRS Version run by this instance(1.6.7) : "; read OPENMRS_VERSION
 	if [ "$OPENMRS_VERSION" == "" ]; then
 		OPENMRS_VERSION=1.6.7
 	fi
+	
+	# Read properties from properties file
+	# Check runtime properties file exists
+	if [ ! -f "$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"-runtime.properties ]; then
+  		echo "The OpenMRS Runtime Properties file for $OPENMRS_APP_NAME does not exist!!! Make sure the OpenMRS/EMR Instance you are configuring exists"
+  		exit 1
+	fi
+	OPENMRS_PROP_FILE="$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"-runtime.properties
+	DB_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.username=' | tail -n 1 | cut -d "=" -f2-`
+	DB_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password=' | tail -n 1 | cut -d "=" -f2-`
+	DB_URL=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.url=' | tail -n 1 | cut -d "=" -f2-`
+	# Extract database name from connection URL
+	if [[ "$DB_URL" =~ /([a-zA-Z0-9_\-]+)\? ]]; then
+  		DB_NAME=${BASH_REMATCH[1]}
+	else
+	  DB_NAME="openmrs"
+	fi
+	OPENMRS_INSTALLED_MODULES_FOLDER_NAME=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "SELECT property_value FROM global_property WHERE property = 'module_repository_folder';"`
+	OPENMRS_INSTALLED_MODULES_PATH=""
+	if [ -d "$OPENMRS_DATA_DIR/$OPENMRS_INSTALLED_MODULES_FOLDER_NAME" ]; then
+		OPENMRS_INSTALLED_MODULES_PATH="$OPENMRS_DATA_DIR/$OPENMRS_INSTALLED_MODULES_FOLDER_NAME" 
+	fi
 	if [ "$OPENMRS_INSTALLED_MODULES_PATH" == "" ]; then
-		OPENMRS_INSTALLED_MODULES_PATH=$OPENMRS_DATA_DIR/modules
+		OPENMRS_INSTALLED_MODULES_PATH="$OPENMRS_DATA_DIR"/modules
 	fi
 	if [ ! -d "$OPENMRS_INSTALLED_MODULES_PATH" ]; then
-		OPENMRS_INSTALLED_MODULES_PATH=$OMRS_DATA_DIR/$OMRS_APP_NAME_modules
+		OPENMRS_INSTALLED_MODULES_PATH="$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"_modules
 	fi
 	
 	cat <<EOF > $EMT_MAIN_CONFIG
