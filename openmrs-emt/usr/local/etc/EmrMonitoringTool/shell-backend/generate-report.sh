@@ -29,8 +29,18 @@ generateReportForConfig() {
 	OMRS_SPECIFIC_INFO="oVersion:$OMRS_VERSION;oModulesFolderPath:$OMRS_SPECIFIC_INFO_MODULES_DIR"
 	
 	BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	
+	IP_ADDRESS=`LANG=C ifconfig eth0 | awk '/inet addr/ {split ($2,A,":"); print A[2]}'`
+	hostname=`curl ipinfo.io/"$IP_ADDRESS"/hostname`
+	city=`curl ipinfo.io/"$IP_ADDRESS"/city`
+	region=`curl ipinfo.io/"$IP_ADDRESS"/region`
+	country=`curl ipinfo.io/"$IP_ADDRESS"/country`
+	loc=`curl ipinfo.io/"$IP_ADDRESS"/loc`;#latitudeCommaLongitudeLocation
+	org=`curl ipinfo.io/"$IP_ADDRESS"/org`
+	LOCATION_STRING="Ip Address:$IP_ADDRESS, Hostname:$hostname, Country:$country, City:$city, Region:$region, LatitudeCommaLongitude Physical Location: $loc, Organisation/Internet Service Provider: $org"
 
-	java -cp "$BASEDIR/lib/*" org.openmrs.module.emtfrontend.Emt $STARTDATE $ENDDATE $LOGFILE $OUTPUTPDF $DHISDATAVALUESETS $OMRS_APP_NAME $DHIS_ORG_UID $OMRS_SPECIFIC_INFO
+
+	java -cp "$BASEDIR/lib/*" org.openmrs.module.emtfrontend.Emt $STARTDATE $ENDDATE $LOGFILE $OUTPUTPDF $DHISDATAVALUESETS $OMRS_APP_NAME $DHIS_ORG_UID "$OMRS_SPECIFIC_INFO" "$LOCATION_STRING"
 }
 
 STARTDATE=$1

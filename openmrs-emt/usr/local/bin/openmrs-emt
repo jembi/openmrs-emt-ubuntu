@@ -148,13 +148,13 @@ if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 	
 	# Read properties from properties file
 	# Check runtime properties file exists
-	if [ ! -f "$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"-runtime.properties ]; then
-  		echo "The OpenMRS Runtime Properties file for $OPENMRS_APP_NAME does not exist at: $OPENMRS_DATA_DIR/$OPENMRS_APP_NAME-runtime.properties!!! Make sure the OpenMRS/EMR Instance you are configuring exists"
+	OPENMRS_PROP_FILE="$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"-runtime.properties
+	if [ ! -f "$OPENMRS_PROP_FILE" ]; then
+  		echo "The OpenMRS Runtime Properties file for $OPENMRS_APP_NAME does not exist at: $OPENMRS_PROP_FILE!!! Make sure the OpenMRS/EMR Instance you are configuring exists"
   		exit 1
 	fi
-	OPENMRS_PROP_FILE="$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"-runtime.properties
 	DB_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.username=' | tail -n 1 | cut -d "=" -f2-`
-	DB_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password=' | tail -n 1 | cut -d "=" -f2-`
+	DB_PASS=$(sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password=' | tail -n 1 | cut -d "=" -f2- | sed 's@\\@@g')
 	DB_URL=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.url=' | tail -n 1 | cut -d "=" -f2-`
 	# Extract database name from connection URL
 	if [[ "$DB_URL" =~ /([a-zA-Z0-9_\-]+)\? ]]; then
@@ -162,15 +162,16 @@ if [ ! -f "$EMT_MAIN_CONFIG" ]; then
 	else
 	  DB_NAME="openmrs"
 	fi
-	OPENMRS_INSTALLED_MODULES_FOLDER_NAME=`mysql -u$DB_USER -p$DB_PASS $DB_NAME -s -N -e "SELECT property_value FROM global_property WHERE property = 'module_repository_folder';"`
 	OPENMRS_INSTALLED_MODULES_PATH=""
+	OPENMRS_INSTALLED_MODULES_FOLDER_NAME=$(mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" -s -N -e "SELECT property_value FROM global_property WHERE property = 'module_repository_folder';")
+	echo "modules folder name: $OPENMRS_INSTALLED_MODULES_FOLDER_NAME"
 	if [ -d "$OPENMRS_DATA_DIR/$OPENMRS_INSTALLED_MODULES_FOLDER_NAME" ]; then
 		OPENMRS_INSTALLED_MODULES_PATH="$OPENMRS_DATA_DIR/$OPENMRS_INSTALLED_MODULES_FOLDER_NAME" 
 	fi
 	if [ "$OPENMRS_INSTALLED_MODULES_PATH" == "" ]; then
 		OPENMRS_INSTALLED_MODULES_PATH="$OPENMRS_DATA_DIR"/modules
 	fi
-	if [ ! -d "$OPENMRS_INSTALLED_MODULES_PATH" ]; then
+	if [ ! -d "$OPENMRS_INSTALLED_MODULES_PATH" ] && [ -d "$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"_modules ]; then
 		OPENMRS_INSTALLED_MODULES_PATH="$OPENMRS_DATA_DIR/$OPENMRS_APP_NAME"_modules
 	fi
 	

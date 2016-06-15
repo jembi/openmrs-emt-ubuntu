@@ -18,6 +18,7 @@ pushDataToDHIS() {
 	DHISDATAVALUES=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-emt-datasetValueSets.json
 	DHIS_NON_UPLOADED=$OMRS_DATA_DIR/EmrMonitoringTool/NotUploadedToDHIS
 	CURL_LOG_FILE=$OMRS_DATA_DIR/EmrMonitoringTool/dhis-curl.log
+	DATE_TODAY=`date`
 	
 	if [ "$DHIS_URL" != "" ] && [ "$DHIS_USERNAME" != "" ] && [ "$DHIS_PASS" != "" ]
 		then
@@ -25,7 +26,7 @@ pushDataToDHIS() {
 			if [[ "$?" -eq 0 ]]
 				then
         			CURL_LOG=`curl -k -d @$DHISDATAVALUES $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS`
-        			echo "$OMRS_APP_NAME:::::$CURL_LOG">>"$CURL_LOG_FILE"
+        			echo "$OMRS_APP_NAME:::::$DATE_TODAY:::::$CURL_LOG">>"$CURL_LOG_FILE"
         			echo "">>"$CURL_LOG_FILE"
         			
         			if [ -d "$DHIS_NON_UPLOADED" ]; then
@@ -34,7 +35,7 @@ pushDataToDHIS() {
         				for DHIS_NON_UPLOADED_FILE in "${DHIS_NON_UPLOADED_FILES[@]}"
 						do
 							CURL_LOG=`curl -k -d @$DHIS_NON_UPLOADED_FILE $DHIS_URL -H "Content-Type:application/json" -u $DHIS_USERNAME:$DHIS_PASS`
-							echo "$OMRS_APP_NAME:::::$CURL_LOG">>"$CURL_LOG_FILE"
+							echo "$OMRS_APP_NAME:::::$DATE_TODAY:::::$CURL_LOG">>"$CURL_LOG_FILE"
 							echo "">>"$CURL_LOG_FILE"
 						done
 						rm -r $DHIS_NON_UPLOADED

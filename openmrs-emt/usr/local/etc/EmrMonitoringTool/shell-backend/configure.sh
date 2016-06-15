@@ -83,14 +83,6 @@ echo ""
 echo "           If this does NOT match the current real time, please report this!"
 echo "           (Any difference of more than 5 minutes)"
 
-# Check write permission for tomcat6 in modules directory
-# TODO remove this check if proved un-necessary
-MODULES_OWNER=`stat -c '%U' $OPENMRS_INSTALL_DIR/modules | tail`
-if [ "$MODULES_OWNER" != "tomcat6" ]; then
-  echo ""
-  echo "WARNING: OpenMRS modules most likely can NOT be uploaded with OpenMRS!" 
-fi
-
 ## Running the scripts right now to make some data logging
 $EMT_INSTALL_DIR/shell-backend/heartbeat.sh
 $EMT_INSTALL_DIR/shell-backend/openmrs-heartbeat.sh

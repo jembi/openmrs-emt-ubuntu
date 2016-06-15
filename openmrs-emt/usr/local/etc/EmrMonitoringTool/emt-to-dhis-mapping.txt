@@ -48,6 +48,7 @@ DATA-ELEMENT_systemInfo_userDirectory=Fy0lelr1WAB
 DATA-ELEMENT_systemInfo_tempDirectory=FveZHUNsC1o
 DATA-ELEMENT_systemInfo_openMRSVersion=Gnpcar514A3
 DATA-ELEMENT_systemInfo_installedModules=ICTGPRAVZVZ
+DATA-ELEMENT_systemRealLocation=hKJXqpumYZ6
 ------------------------------------------------------------------------------------
 
 

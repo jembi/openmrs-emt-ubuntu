@@ -29,7 +29,7 @@ openmrsHeartbeat() {
 
 	# Read properties from properties file
 	DB_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.username=' | tail -n 1 | cut -d "=" -f2-`
-	DB_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password=' | tail -n 1 | cut -d "=" -f2-`
+	DB_PASS=$(sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.password=' | tail -n 1 | cut -d "=" -f2- | sed 's@\\@@g')
 	DB_URL=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'connection.url=' | tail -n 1 | cut -d "=" -f2-`
 	OPENMRS_USER=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.username=' | tail -n 1 | cut -d "=" -f2-`
 	OPENMRS_PASS=`sed '/^\#/d' "$OPENMRS_PROP_FILE" | grep 'scheduler.password=' | tail -n 1 | cut -d "=" -f2-`
